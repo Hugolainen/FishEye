@@ -1,0 +1,21 @@
+@import "./utils/variables";
+@import "./utils/functions";
+@import "./utils/mixins";
+@import "./utils/placeHolders";
+@import "./utils/keyframes";
+
+@import "./base/base";
+@import "./base/typography";
+
+@import "./components/button";
+@import "./components/photographerCard";
+@import "./components/tagList";
+
+/*
+@import "./layouts/header";
+@import "./layouts/footer";
+*/
+
+@import "./pages/homePage";
+@import "./pages/photographerPage";
+
