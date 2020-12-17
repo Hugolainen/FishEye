@@ -17,44 +17,56 @@
 
         <main class="main">
             <section class="photographProfile">
-                <h1 class="main__title"> Mimi Keel </h1>
-                <p class="photographerProfile__desc">
-                    <strong> London, UK </strong> <br>
-                    Finding beauty in everyday things <br>
-                    <em> $400/day </em>
-                </p>
-                <ul class="tagList">
-                    <li> <a> #Portrait </a></li>
-                    <li> <a> #Events </a></li>
-                    <li> <a> #Travel </a></li>
-                    <li> <a> #Animals </a></li>
-                </ul>
+                <div class="photographProfile__desc">
+                    <h1> Mimi Keel </h1>
+                    <p>
+                        <strong> London, UK </strong> <br>
+                        Finding beauty in everyday things <br>
+                    </p>
+                    <ul class="tagList">
+                        <li> <a> #Portrait </a></li>
+                        <li> <a> #Events </a></li>
+                        <li> <a> #Travel </a></li>
+                        <li> <a> #Animals </a></li>
+                    </ul>
+                </div>
                 <button class="photographProfile__button"> Contact me </button>
-                <div>
-                    <img class="photographProfile__photo" src="public/img/photographersIDphotos/MimiKeel.jpg" alt="Mimi Keel">
+                <div class="photographProfile__photo">
+                    <img src="public/img/photographersIDphotos/MimiKeel.jpg" alt="Mimi Keel">
                 </div>
             </section>
 
-            <form method="get">
-                <label for="order"> Order by </label>
-                <input list="orderList" name="order" id="order">
-                <datalist id="orderList">
-                  <option value="Popularity">
-                  <option value="Date">
-                  <option value="Title">
-                </datalist>
-              </form>
+            <div class="selectMenu">
+                <label> Order by </label>
+                  <select id="selectedOrder">
+                    <option value="popularity">Popularity</option>
+                    <option value="date">Date</option>
+                    <option value="title">Title</option>
+                </select> 
+            </div>
 
+            <footer class="photographerNumbers">
+                <span> 297 091 <i class="fas fa-heart"></i> </span>
+                <span> 300$ / day </span>
+            </footer>
 
             <content class="main__content"> 
-                <div class="photographerCard">
+                <div class="mediaCard">
+                    <div class="mediaCard__image">  
+                        <img src="public/img/photographersIDphotos/MimiKeel.jpg" alt="">
+                    </div>
+                    <div class="mediaCard__desc"> 
+                        <p class="mediaCard__desc__name"> Rainbow </p>
+                        <p class="mediaCard__desc__number"> 70 $ </p>
+                        <p class="mediaCard__desc__number"> 12 <i class="fas fa-heart"></i> </p>
+                    </div>
 
                 </div>
             </content>
         </main>
 
-        <footer>
 
-        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="selectMenu.js"></script>
     </body>
 </html>

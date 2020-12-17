@@ -1,0 +1,29 @@
+.mediaCard{
+    &__image{
+        & img{
+            max-width: 350px;
+            max-height: 300px;
+            min-width: 350px;
+            min-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    }
+
+    &__desc{
+        display: flex;
+        justify-content: flex-end;
+        color: $color-secondaryEmpty-text;
+
+        &__name{
+            font-size: 24px;
+            margin-right: auto;
+        }
+
+        &__number{
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+    }
+}
