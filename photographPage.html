@@ -58,7 +58,7 @@
 
                 <div class="mediaCard">
                     <div class="mediaCard__image">  
-                        <img src="public/img/photographersIDphotos/MimiKeel.jpg" alt="">
+                        <img id="modalMedia_open" src="public/img/photographersIDphotos/MimiKeel.jpg" alt="">
                     </div>
                     <div class="mediaCard__desc"> 
                         <p class="mediaCard__desc__name"> Rainbow </p>
@@ -69,7 +69,7 @@
 
             </content>
 
-            <div class="content" id="modalForm">
+            <div class="modalForm" id="modalForm">
                   <div class="modal-body">
                     <h1> Contact me <br>
                         Mimi Keel
@@ -135,11 +135,20 @@
                   <span class="close closeModal-btn" id="btn-close"> <i class="fas fa-times"></i> </span>
             </div>
 
-
+            <div class="modalMedia" id="modalMedia">
+                <div class="modalMedia__body">
+                    <div> <img id="imgShow" src="public/img/photographersIDphotos/MimiKeel.jpg" alt=""> </div>
+                    <p id="imgName"> Rainbow </p>
+                    <span class="navButton navButton__left" id="navButton_left"> <i class="fas fa-chevron-left"></i> </span>
+                    <span class="navButton navButton__right" id="navButton_right"> <i class="fas fa-chevron-right"></i> </span>
+                </div>
+                <span class="modalMedia__close" id="modalMedia_close"> <i class="fas fa-times"></i> </span>
+          </div>
         </main>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="public/scripts/selectMenu.js"></script>
-        <script type="text/javascript" src="public/scripts/modal.js"></script>
+        <script type="text/javascript" src="public/scripts/modalForm.js"></script>
+        <script type="text/javascript" src="public/scripts/modalMedia.js"></script>
     </body>
 </html>
