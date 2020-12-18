@@ -1,0 +1,106 @@
+.button {
+  background:$color-primaryFilled-background;
+  color: $color-primaryFilled-text;
+  
+  margin-top: 20px;
+  padding: 1em;
+  
+  width: 170px;
+  height: 70px;
+  border-radius: 5px;
+
+  font-size: 18px;
+  border: 0;
+  cursor: pointer;
+}
+
+.content {
+    display: none;
+    
+    position: fixed;
+    top: 0;
+    left: calc(50% - 250px);
+    @media (max-width:669px) {
+        left: 0;
+    }
+
+    margin: 5% auto;
+    width: 100%;
+    max-width: 669px;
+    animation-name: modalopen;
+    animation-duration: var(--modal-duration);
+    background:$color-secondaryFilled-background;
+    border-radius: 10px;
+    overflow: hidden;
+
+    color: $color-secondaryFilled-text;
+    padding-top: 10px;
+}
+
+.modal-body {
+  padding: 10px 8%;
+  margin: 10px auto;
+
+  & h1{
+    font-size: 64px;
+    color: $color-secondaryFilled-text;
+    line-height: 83px;
+  }
+}
+
+label {
+  font-family: var(--font-default);
+  font-size: 36px;
+  font-weight: normal;
+  display: inline-block;
+  margin-bottom: 2px;
+  margin-top: 10px;
+}
+
+input {
+  padding: 8px;
+  border: 0.8px solid $color-primaryVoid-background;
+  outline: none;
+}
+
+.text-control {
+  margin: 0;
+  padding: 8px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 22px;
+  height: 52px;
+
+  &--message{
+    height: 184px;
+  }
+}
+
+.msg_submitSuccess{
+  font-size: 22px;
+  color: $color-primaryFilled-text;
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.msg_error{
+  font-size: 18px;
+  color: $color-primaryFilled-text;
+  display: none;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  text-align: left;
+}
+
+.close {
+  position: absolute;
+  right: 45px;
+  top: 45px;
+
+  font-size: 55px;
+  color:  $color-primaryFilled-text;
+
+  cursor: pointer;
+}
