@@ -1,5 +1,5 @@
 .photographProfile{
-    padding: 15px 0;
+    padding: 10px 0;
     margin: 30px 10px;
 
     background-color: $color-secondaryLightFill-background;
@@ -8,33 +8,59 @@
     display:flex;
     justify-content: space-between;
 
-
-    /*
     @media (max-width: $breakpoint-minMobile) {
+        background-color: $color-primaryVoid-background;
+        margin: 0;
     }
-    */
-    & .tagList li{
+    
+    & .tagList{
+        justify-content: flex-start;
+
+        & li{
         font-size: 18px;
         font-weight: bold;
+        @media (max-width: $breakpoint-minMobile) {
+            font-size: 13px;
+            font-weight: bold;
+            }
+        }
     }
 
     &__desc{   
         margin-left: 40px;
 
+        @media (max-width: $breakpoint-minMobile) {
+            margin-left: 20px;
+        }
+
         & h1{
             color:$color-primaryVoid-text;
             font-size: 64px;
+
+            @media (max-width: $breakpoint-minMobile) {
+                font-size: 36px;
+            }
         }
 
         & p{
             font-size: 18px;
             color: $color-secondaryLightFill-text;
             margin-bottom: 20px;
+            color: $color-photographPersonalSentence;
+
+            @media (max-width: $breakpoint-minMobile) {
+                font-size: 13px;
+                margin-bottom: 9px;
+            }
 
             & strong{
                 font-size: 24px;
                 display: inline-block;
-                margin: 20px 0;
+                margin: 4px 0;
+
+                @media (max-width: $breakpoint-minMobile) {
+                    font-size: 13px;
+                }
             }
         }
     }
@@ -60,6 +86,15 @@
             background-color: $color-secondaryFilled-background;
             color: $color-secondaryFilled-text;
         }
+
+        
+        @media (max-width: $breakpoint-minMobile) {
+            position: fixed;
+            bottom: 30px;
+            left: calc(50% - 85px);
+            width: 170px;
+            font-size: 18px;
+        }
     }
 
     &__photo{
@@ -71,25 +106,31 @@
             object-fit: cover;
             border-radius: 50%;
             margin-right: 40px;
+
+            @media (max-width: $breakpoint-minMobile) {
+                max-width: 100px;
+                max-height: 100px;
+                min-width: 100px;
+                min-height: 100px;
+                object-fit: cover;
+                border-radius: 50%;
+                margin-right: 20px;
+            }
         }
     }
 }
 
+.galery{
+    margin: 0 100px;
 
-.orderSelectList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-
-
-    & input{
-        font-size: 18px;
-        line-height: 23px;
-        font-weight: bold;
-        padding: 20px;
-        width: 170px;
-        border-radius: 5px;
-
-        background-color: $color-primaryFilled-background;
-        color: $color-primaryFilled-text;
-
+    
+    @media (max-width: $breakpoint-minMobile) {
+        margin: 0 10px;
+        flex-direction: column;
+        align-content: space-around;
     }
 }

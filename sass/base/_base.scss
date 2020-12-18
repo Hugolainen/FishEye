@@ -9,6 +9,7 @@
 body {
     box-sizing: border-box;
     width: 100vw;
+    min-width: 320px;
     max-width: 1440px;
     margin: auto;
 }
