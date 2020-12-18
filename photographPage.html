@@ -111,11 +111,13 @@
         
                       <div class="formData">
                         <label for="message">Your message</label>
-                        <input
+                        <textarea
                           class="text-control text-control--message"
                           type="text"
                           id="message"
-                          name="message" />
+                          name="message" 
+                          rows="4" 
+                          cols="50"></textarea>
                       </div>
                       <span class="msg_error" id="message_errorMessage">  </span>
 
@@ -125,7 +127,7 @@
                         class="button"
                         value="Send" />
                         <span class="msg_submitSuccess" id="message-submitSucess"> 
-                          Submit processing
+                          Message sent succesfully
                         </span>
                     </form>
                   </div>
@@ -133,9 +135,8 @@
             </div>
         </main>
 
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="selectMenu.js"></script>
-        <script src="modal.js"></script>
+        <script src="public/scripts/selectMenu.js"></script>
+        <script type="text/javascript" src="public/scripts/modal.js"></script>
     </body>
 </html>

@@ -70,19 +70,15 @@ input {
   border-radius: 8px;
   font-size: 22px;
   height: 52px;
+  outline: none;
+
+    &:focus{
+        border: $color-primaryFilled-background solid 4px;
+    }
 
   &--message{
     height: 184px;
   }
-}
-
-.msg_submitSuccess{
-  font-size: 22px;
-  color: $color-primaryFilled-text;
-  display: none;
-  margin-top: 10px;
-  margin-bottom: 0px;
-  text-align: center;
 }
 
 .msg_error{
@@ -93,6 +89,16 @@ input {
   margin-bottom: 7px;
   text-align: left;
 }
+
+.msg_submitSuccess{
+    font-size: 22px;
+    color: $color-primaryFilled-text;
+    display: none;
+    float: right;
+    margin-top: 40px;
+    margin-right: 40px;
+    text-align: center;
+  }
 
 .close {
   position: absolute;
