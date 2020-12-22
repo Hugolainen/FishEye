@@ -15,42 +15,26 @@
                 <img class="header__logo" src="public/img/logo.png" alt="Fisheye Home page"> </img>
             </a>
             <nav class="header__nav">
-                <ul class="tagList taglist--mobileNav">
+                <ul class="tagList taglist--mobileNav" id="navTagList">
                     <li> <a> #Portrait </a> </li>
                     <li> <a> #Art </a> </li>
                     <li> <a> #Fashion </a> </li>
                     <li> <a> #Architecture </a> </li>
                     <li> <a> #Travel </a> </li>
                     <li> <a> #Sport </a> </li>
-                    <li> <a> #Animal </a> </li>
-                    <li> <a> #Event </a> </li>
+                    <li> <a> #Animals </a> </li>
+                    <li> <a> #Events </a> </li>
                 </ul>
             </nav>
         </header>
 
         <main class="main">
             <h1 class="main__title"> Our photographers </h1>
-            <content class="main__content"> 
-                <div class="photographerCard">
-                        <h2 class="photographerCard__name"> <a href='photographPage.html'> 
-                            <img class="header__logo" src="public/img/photographersIDphotos/MimiKeel.jpg" alt="Mimi Keel">
-                            Mimi Keel
-                        </a> </h2>
-                        <p class="photographerCard__desc">
-                            <strong> London, UK </strong> <br>
-                            Finding beauty in everyday things <br>
-                            <em> $400/day </em>
-                        </p>
-                        <ul class="tagList">
-                            <li> <a> #Portrait </a></li>
-                            <li> <a> #Events </a></li>
-                            <li> <a> #Travel </a></li>
-                            <li> <a> #Animals </a></li>
-                        </ul>
-                </div>
+            <content class="main__content" id="photographerGallery"> 
+
             </content>
         </main>
 
-        <script type="text/javascript" src="public/scripts/generateMainContent.js"></script>
+        <script type="text/javascript" src="public/scripts/manageMainContent.js"></script>
     </body>
 </html>
