@@ -107,6 +107,17 @@ request.onload = function() {
         photographerPrice.innerHTML = photographer.price + "$ / day";
     }
 
+    function updateAmmountOfLikes(){
+        var res=0;
+        for(var i=0; photographerMediaList.length ;i++)
+        {
+            res+=fullMediaList[photographerMediaList[i]].likes;
+        }
+        console.log(res);
+        return res;
+    }
+
+
     // Generate one photographer card
     function generateMediaCard(index){
         const mediaCard = document.createElement("div");
@@ -124,7 +135,23 @@ request.onload = function() {
         mediaLike.classList.add("mediaCard__desc__number"); 
 
         const newMedia = fullMediaList[index];
-        mediaMedia.innerHTML = "<img class=\"modalMedia_open\" src=\"public/img/media/" + newMedia.image + " alt=" + newMedia.alt + ">";
+        if(newMedia.image == undefined)
+        {
+            mediaMedia.innerHTML = "<video class=\"modalMedia_open\" controls> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + "</video>";
+            console.log(newMedia.video);
+            
+            //<video class=\"modalMedia_open\> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\"> </video>";
+
+            /*
+            <video class="modalMedia_open" controls> 
+            <source src="public/img/media/Travel_Rock_Mountains.mp4" type="video/mp4"> 
+            test
+            </video>
+            */
+        }
+        else{
+            mediaMedia.innerHTML = "<img class=\"modalMedia_open\" src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + "\">";
+        } 
         mediaName.innerHTML = newMedia.alt;
         mediaPrice.innerHTML = newMedia.price + " $";
         mediaLike.innerHTML = newMedia.likes + " <i class=\"fas fa-heart\"></i>";

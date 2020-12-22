@@ -1,6 +1,7 @@
 .mediaCard{
 
     width: fit-content;
+    margin: 20px 30px;
 
     &__image{
         & img{
@@ -11,6 +12,23 @@
             object-fit: cover;
             border-radius: 5px;
             cursor: pointer;
+
+            @media (max-width: $breakpoint-minMobile) {
+                max-width: 300px;
+                max-height: 195px;
+                min-width: 300px;
+                min-height: 195px;
+            }
+        }
+
+        & video{
+            max-width: 350px;
+            max-height: 300px;
+            min-width: 350px;
+            min-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+            //cursor: pointer;
 
             @media (max-width: $breakpoint-minMobile) {
                 max-width: 300px;
