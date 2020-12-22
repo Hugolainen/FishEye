@@ -5,7 +5,16 @@ const photographerTags = document.getElementById('photographerTags');
 const photographerProfilePhoto = document.getElementById('photographerProfilePhoto');
 const photographerLikes = document.getElementById('photographerLikes');
 const photographerPrice = document.getElementById('photographerPrice');
+const selectOrder_roll = document.getElementById('selectedOrder');
+
 const photographID = 930;
+
+selectOrder_roll.addEventListener('change', (event) => {
+    console.log(event.target.value);
+});
+//<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+//<script src="public/scripts/selectMenu.js"></script>
+
 
 let requestURL = 'https://hugolainen.github.io/FishEye/public/data/FishEyeData.json';
 let request = new XMLHttpRequest();
@@ -14,19 +23,19 @@ request.responseType = 'json';
 request.send();
 request.onload = function() {
     const myData = request.response;
-
     const fullMediaList = myData.media;
     const photographerMediaList = getPhotographerMediaList(fullMediaList);
 
     generateProfile(photographID);
+    const priceMediaOrder = orderMediaList("price", photographerMediaList);
+    const popularityMediaOrder = orderMediaList("default", photographerMediaList);
+
     for(var i=0; i<photographerMediaList.length; i++){
-        gallery.appendChild(generateMediaCard(photographerMediaList[i]));
+        gallery.appendChild(generateMediaCard(popularityMediaOrder[i]));
         //alert(myData.photographers[i].name)
     }
     
-    
-    
-
+    // get the list of index of the photograph medias based on his ID number
     function getPhotographerMediaList(baseMediaList)
     {
         let mediaList = [];
@@ -40,13 +49,14 @@ request.onload = function() {
         return mediaList;
     }
 
+    // generate a new list of index re-arranged based on the order type
     function orderMediaList(orderType, photographerMediaList){
         let orderedList = photographerMediaList;
         let continueSort = true;
         let temp;
         if(orderType=="date")
         {
-            
+            /// TO DO
         }
         else if(orderType=="price")
         {
@@ -55,7 +65,7 @@ request.onload = function() {
                 continueSort = false;
                 for(var i=0; i<orderedList.length-1; i++)
                 {
-                    if(mediaList[orderedList[i]].price > mediaList[orderedList[i+1]].price){
+                    if(fullMediaList[orderedList[i]].price > fullMediaList[orderedList[i+1]].price){
                         temp = orderedList[i];
                         orderedList[i] = orderedList[i+1];
                         orderedList[i+1] = temp;
@@ -70,7 +80,7 @@ request.onload = function() {
                 continueSort = false;
                 for(var i=0; i<orderedList.length-1; i++)
                 {
-                    if(mediaList[orderedList[i]].likes < mediaList[orderedList[i+1]].likes){
+                    if(fullMediaList[orderedList[i]].likes < fullMediaList[orderedList[i+1]].likes){
                         temp = orderedList[i];
                         orderedList[i] = orderedList[i+1];
                         orderedList[i+1] = temp;
@@ -79,6 +89,7 @@ request.onload = function() {
                 }
             }
         }
+        return orderedList;
     }
 
     // Generate the photographer profil and footer numbers
