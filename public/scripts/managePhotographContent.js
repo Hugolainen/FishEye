@@ -1,4 +1,10 @@
 const gallery = document.getElementById('mediaGallery');
+const photographerName = document.getElementById('photographerName');
+const photographerDesc = document.getElementById('photographerDesc');
+const photographerTags = document.getElementById('photographerTags');
+const photographerProfilePhoto = document.getElementById('photographerProfilePhoto');
+const photographerLikes = document.getElementById('photographerLikes');
+const photographerPrice = document.getElementById('photographerPrice');
 const photographID = 930;
 
 let requestURL = 'https://hugolainen.github.io/FishEye/public/data/FishEyeData.json';
@@ -17,7 +23,7 @@ request.onload = function() {
         gallery.appendChild(generateMediaCard(photographerMediaList[i]));
         //alert(myData.photographers[i].name)
     }
-    
+    generateProfile(photographID);
 
     function getPhotographerMediaList(baseMediaList)
     {
@@ -74,8 +80,31 @@ request.onload = function() {
     }
 
     // Generate the photographer profil and footer numbers
-    function generateProfile(){
-        return false;
+    function generateProfile(ID){
+        const photographerList = myData.photographers;
+        let photographIndex;
+        for(var i=0; i<photographerList.length; i++)
+        {
+            if(photographerList[i].id == ID)
+            {
+                photographIndex=i;
+                break;
+            }
+        }
+    
+        const photographer = photographerList[photographIndex];
+        const ammountOfLikes = 100;
+    
+        photographerName.innerText = photographer.name;
+        photographerDesc.innerHTML = "<strong>" + photographer.city + ", " + photographer.country + "</strong> <br>" + photographer.tagline + "<br>";
+        for(var i=0; i<photographer.tags.length; i++){
+            const tag = document.createElement("li");
+            tag.innerHTML = "#" + photographer.tags[i] + "</li>";
+            photographerTags.appendChild(tag);
+        }
+        photographerProfilePhoto.innerHTML = "<img class=\"photographProfile__photo\" src=\"public/img/photographersIDphotos/" + photographer.portrait + "\" alt=\"" + photographer.name + "\" >";
+        photographerLikes.innerHTML = ammountOfLikes + "<i class=\"fas fa-heart\"></i>";
+        photographerPrice.innerHTML = photographer.price + "$ / day";
     }
 
     // Generate one photographer card
