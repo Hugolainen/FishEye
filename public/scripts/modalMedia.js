@@ -8,23 +8,23 @@ const prevImg = document.getElementById('navButton_left');
 const nextImg = document.getElementById('navButton_right');
 
 // Lunch modal event
-modalMedia_Open[0].addEventListener('click', ($event) => {
+modalMedia_Open[1].addEventListener('click', ($event) => {
   $event.preventDefault();
-  launchModal();
+  launchModalMedia();
 });
 
 // launch modal form
-function launchModal() {
+function launchModalMedia() {
   modalMedia.style.display = "block";
 }
 
 // close modal with "cross" or after successful submit
 modalMedia_Close.addEventListener('click', ($event) => {
   $event.preventDefault();
-  closeModal();
+  closeModalMedia();
 });
 
 // close modal form
-function closeModal() {
+function closeModalMedia() {
   modalMedia.style.display = "none";
 }

@@ -18,12 +18,14 @@ request.onload = function() {
     const fullMediaList = myData.media;
     const photographerMediaList = getPhotographerMediaList(fullMediaList);
 
-
+    generateProfile(photographID);
     for(var i=0; i<photographerMediaList.length; i++){
         gallery.appendChild(generateMediaCard(photographerMediaList[i]));
         //alert(myData.photographers[i].name)
     }
-    generateProfile(photographID);
+    
+    
+    
 
     function getPhotographerMediaList(baseMediaList)
     {
@@ -103,20 +105,9 @@ request.onload = function() {
             photographerTags.appendChild(tag);
         }
         photographerProfilePhoto.innerHTML = "<img class=\"photographProfile__photo\" src=\"public/img/photographersIDphotos/" + photographer.portrait + "\" alt=\"" + photographer.name + "\" >";
-        photographerLikes.innerHTML = ammountOfLikes + "<i class=\"fas fa-heart\"></i>";
+        photographerLikes.innerHTML = ammountOfLikes + " <i class=\"fas fa-heart\"></i>";
         photographerPrice.innerHTML = photographer.price + "$ / day";
     }
-
-    function updateAmmountOfLikes(){
-        var res=0;
-        for(var i=0; photographerMediaList.length ;i++)
-        {
-            res+=fullMediaList[photographerMediaList[i]].likes;
-        }
-        console.log(res);
-        return res;
-    }
-
 
     // Generate one photographer card
     function generateMediaCard(index){
@@ -138,10 +129,7 @@ request.onload = function() {
         if(newMedia.image == undefined)
         {
             mediaMedia.innerHTML = "<video class=\"modalMedia_open\" controls> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + "</video>";
-            console.log(newMedia.video);
-            
-            //<video class=\"modalMedia_open\> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\"> </video>";
-
+  
             /*
             <video class="modalMedia_open" controls> 
             <source src="public/img/media/Travel_Rock_Mountains.mp4" type="video/mp4"> 
@@ -165,7 +153,6 @@ request.onload = function() {
         return mediaCard;
     }
 }
-
 
 /*
 <div class="mediaCard">
