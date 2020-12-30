@@ -23,20 +23,24 @@ getAsync().then((data) =>
     const photographerList = data.photographers;
     const photgrapherIndex = getPhotographer(photographerID, photographerList);
     const photographerMediaList = getPhotographerMediaList(photographerID, mediaList);
+    const test1 = generateDateOrderList(mediaList, photographerMediaList);
+    const test2 = generateTitleOrderList(mediaList, photographerMediaList);
+    const test3 = generatePopularityOrderList(mediaList, photographerMediaList);
+    
     generateProfile(photgrapherIndex, photographerList);
-    generateMediaList(mediaList, photographerMediaList, photographerMediaList);
+    generateGallery(mediaList, photographerMediaList, photographerMediaList);
 
     selectOrder_roll.addEventListener('change', (event) => {
         if(event.target.value == "date")
         {
-            generateMediaList(mediaList, photographerMediaList, generateDateOrderList(mediaList, photographerMediaList));
+            generateGallery(mediaList, photographerMediaList, generateDateOrderList(mediaList, photographerMediaList));
         }
         else if(event.target.value == 'title')
         {
-            generateMediaList(mediaList, photographerMediaList, generateTitleOrderList(mediaList, photographerMediaList));
+            generateGallery(mediaList, photographerMediaList, generateTitleOrderList(mediaList, photographerMediaList));
         }
         else{
-            generateMediaList(mediaList, photographerMediaList, generatePopularityOrderList(mediaList, photographerMediaList));
+            generateGallery(mediaList, photographerMediaList, generatePopularityOrderList(mediaList, photographerMediaList));
         }
     });
 }); 
@@ -89,7 +93,11 @@ function generateProfile(index, photographerList){
 
 // generate a new list of index re-arranged based on the order type
 function generatePopularityOrderList(mediaList, photographerMediaList){
-    var resultOrder = photographerMediaList;
+    var resultOrder = new Array(photographerMediaList.length);
+    for(var i=0; i<resultOrder.length; i++)
+    {
+        resultOrder[i] = photographerMediaList[i];
+    }
     var continueSort = true;
     var temp;
 
@@ -112,9 +120,13 @@ function generatePopularityOrderList(mediaList, photographerMediaList){
 }
 
 function generateDateOrderList(mediaList, photographerMediaList){
-    var resultOrder = photographerMediaList;
-
-    for(var i=0; i<resultOrder.length-1; i++)
+    var resultOrder = new Array(photographerMediaList.length);
+    for(var i=0; i<resultOrder.length; i++)
+    {
+        resultOrder[i] = photographerMediaList[i];
+    }
+    console.log(resultOrder);
+    for(var i=0; i<resultOrder.length; i++)
     {
         resultOrder[i] = resultOrder[0];
     }
@@ -123,9 +135,13 @@ function generateDateOrderList(mediaList, photographerMediaList){
 }
 
 function generateTitleOrderList(mediaList, photographerMediaList){
-    var resultOrder = photographerMediaList;
+    var resultOrder = new Array(photographerMediaList.length);
+    for(var i=0; i<resultOrder.length; i++)
+    {
+        resultOrder[i] = photographerMediaList[i];
+    }
 
-    for(var i=0; i<resultOrder.length-1; i++)
+    for(var i=0; i<resultOrder.length; i++)
     {
         resultOrder[i] = resultOrder[2];
     }
@@ -180,7 +196,7 @@ function generateMediaCard(index, mediaList){
 }
 
 // Generate the gallery
-function generateMediaList(mediaList, photographerMediaList, orderedIndexList){
+function generateGallery(mediaList, photographerMediaList, orderedIndexList){
     while (gallery.firstChild) {
         gallery.removeChild(gallery.firstChild);
     }
