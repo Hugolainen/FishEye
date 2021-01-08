@@ -43,6 +43,13 @@ getAsync().then((data) =>
             generateGallery(photographerMediaList, orderPopularity);
         }
     });
+
+    var modalMedia_Opener = document.getElementsByClassName("modalMedia_open"); 
+    for(var i=0;i<modalMedia_Opener.length;i++){ 
+        modalMedia_Opener[i].addEventListener("click", () => { 
+            launchModalMedia();
+        }); 
+    }
 }); 
 
 // get the index of the photographer based on his ID number
@@ -138,6 +145,7 @@ function generateMediaCard(newMedia){
 
     mediaCard.classList.add("mediaCard"); 
     mediaMedia.classList.add("mediaCard__image"); 
+    mediaMedia.classList.add("modalMedia_open");
     mediaDesc.classList.add("mediaCard__desc"); 
     mediaName.classList.add("mediaCard__desc__name"); 
     mediaPrice.classList.add("mediaCard__desc__number"); 
@@ -145,7 +153,7 @@ function generateMediaCard(newMedia){
 
     if(newMedia.image == undefined)
     {
-        mediaMedia.innerHTML = "<video class=\"modalMedia_open\" controls> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + "</video>";
+        mediaMedia.innerHTML = "<video> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + "</video>";
 
         /*
         <video class="modalMedia_open" controls> 
@@ -155,7 +163,7 @@ function generateMediaCard(newMedia){
         */
     }
     else{
-        mediaMedia.innerHTML = "<img class=\"modalMedia_open\" src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + "\">";
+        mediaMedia.innerHTML = "<img src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + "\">";
     } 
     mediaName.innerHTML = newMedia.alt;
     mediaPrice.innerHTML = newMedia.price + " $";
@@ -212,3 +220,5 @@ getData().then(()=>{
     console.log(myData);
 });
 */
+
+
