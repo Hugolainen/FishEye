@@ -369,7 +369,7 @@
       "id": 2525345343,
       "photographerId": 243,
       "image": "Portrait_Wednesday.jpg",
-	  "alt": "Wednesday", 
+	    "alt": "Wednesday", 
       "tags": ["portait"],
       "likes": 34,
       "date": "2019-04-07",

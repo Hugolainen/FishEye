@@ -1,8 +1,8 @@
 // DOM Elements
 const modalForm = document.getElementById('modalForm');
-const modalBtn = document.getElementById('modal-btn');
-const closeModalBtn = document.getElementById('btn-close');
-const formSubmitBtn = document.getElementById('btn-submit');
+const modalForm_Open = document.getElementById('modalForm_open');
+const modalForm_Close = document.getElementById('modalForm_close');
+const modalForm_Submit = document.getElementById('modalForm_submit');
 
 const formFirst = document.getElementById('first');
 const formLast = document.getElementById('last');
@@ -17,25 +17,27 @@ const submitSucess_message = document.getElementById('message-submitSucess');
 
 
 // Lunch modal event
-modalBtn.addEventListener('click', ($event) => {
+modalForm_Open.addEventListener('click', ($event) => {
   $event.preventDefault();
-  launchModal();
+  launchModalForm();
 });
 
 // launch modal form
-function launchModal() {
+function launchModalForm() {
   modalForm.style.display = "block";
+  modalForm_Open.style.display = "none";
 }
 
 // close modal with "cross" or after successful submit
-closeModalBtn.addEventListener('click', ($event) => {
+modalForm_Close.addEventListener('click', ($event) => {
   $event.preventDefault();
-  closeModal();
+  closeModalForm();
 });
 
 // close modal form
-function closeModal() {
+function closeModalForm() {
   modalForm.style.display = "none";
+  modalForm_Open.style.display = "block";
 
   // Reset messages
   first_errMessage.style.display = "none";  
@@ -109,7 +111,7 @@ function validateMessage(){
 // Prevent the normal messages of the input to appear / and to reload
 // Valide every input one by one (could aslo be all together)
 // If OK, print a success message and open the success screen after 2s
-formSubmitBtn.addEventListener('click', ($event) => {
+modalForm_Submit.addEventListener('click', ($event) => {
   $event.preventDefault();
 
   if(validateFirst()
@@ -118,7 +120,7 @@ formSubmitBtn.addEventListener('click', ($event) => {
   && validateMessage())
   {
     submitSucess_message.style.display = "block";
-    setTimeout(closeModal, 2000);
+    setTimeout(closeModalForm, 2000);
     setTimeout(cleanForm, 2000);
   }
 });
