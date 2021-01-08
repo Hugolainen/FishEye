@@ -7,6 +7,9 @@ const photographerLikes = document.getElementById('photographerLikes');
 const photographerPrice = document.getElementById('photographerPrice');
 const selectOrder_roll = document.getElementById('selectedOrder');
 
+
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const photographerID = urlParams.get('id');
 
@@ -23,24 +26,27 @@ getAsync().then((data) =>
     const photographerList = data.photographers;
     const photgrapherIndex = getPhotographer(photographerID, photographerList);
     const photographerMediaList = getPhotographerMediaList(photographerID, mediaList);
-    const test1 = generateDateOrderList(mediaList, photographerMediaList);
-    const test2 = generateTitleOrderList(mediaList, photographerMediaList);
-    const test3 = generatePopularityOrderList(mediaList, photographerMediaList);
-    
+    const orderPopularity = generateOrderList(photographerMediaList, 'popularity');
+    console.log(orderPopularity);
+    const orderDate = generateOrderList(photographerMediaList, 'date');
+    console.log(orderDate);
+    const orderName = generateOrderList(photographerMediaList, 'name');
+    console.log(orderName);
+
     generateProfile(photgrapherIndex, photographerList);
-    generateGallery(mediaList, photographerMediaList, photographerMediaList);
+    generateGallery(photographerMediaList, orderPopularity);
 
     selectOrder_roll.addEventListener('change', (event) => {
         if(event.target.value == "date")
         {
-            generateGallery(mediaList, photographerMediaList, generateDateOrderList(mediaList, photographerMediaList));
+            generateGallery(photographerMediaList, orderDate);
         }
         else if(event.target.value == 'title')
         {
-            generateGallery(mediaList, photographerMediaList, generateTitleOrderList(mediaList, photographerMediaList));
+            generateGallery(photographerMediaList, orderName);
         }
         else{
-            generateGallery(mediaList, photographerMediaList, generatePopularityOrderList(mediaList, photographerMediaList));
+            generateGallery(photographerMediaList, orderPopularity);
         }
     });
 }); 
@@ -67,9 +73,10 @@ function getPhotographerMediaList(ID, baseMediaList)
     {
         if(baseMediaList[i].photographerId == ID)
         {
-            mediaList.push(i);
+            mediaList.push(baseMediaList[i]);
         }
     }
+    console.log(mediaList);
     return mediaList;
 }
 
@@ -92,49 +99,46 @@ function generateProfile(index, photographerList){
 
 
 // generate a new list of index re-arranged based on the order type
-function generatePopularityOrderList(mediaList, photographerMediaList){
-    var resultOrder = new Array(photographerMediaList.length);
-    for(var i=0; i<resultOrder.length; i++)
+function generateOrderList(mediaList, type){
+    let orderList = [];
+    for(var i=0; i<mediaList.length;i++)
     {
-        resultOrder[i] = photographerMediaList[i];
-    }
-    var continueSort = true;
-    var temp;
-
-    while(continueSort)
-    {
-        continueSort = false;
-        for(var i=0; i<resultOrder.length-1; i++)
-        {
-            if(mediaList[resultOrder[i]].likes < mediaList[resultOrder[i+1]].likes)
-            {
-                temp = resultOrder[i];
-                resultOrder[i] = resultOrder[i+1];
-                resultOrder[i+1] = temp;
-                continueSort = true;
-            }
+        const mediaItem = {
+            'index':i,
+            'likes':mediaList[i].likes,
+            'date':mediaList[i].date,
+            'name':mediaList[i].alt,
         }
+        orderList.push(mediaItem);
+    }
+
+    if(type === "name")
+    {
+        return orderList.sort((a, b) => b.name - a.name);
+    }
+    else if(type === "date"){
+        return orderList.sort((a, b) => b.date - a.date);
+    }
+    else{
+        return orderList.sort((a, b) => b.likes - a.likes);
+    }
+}
+
+function generateDateOrderList(photographerMediaList){
+    var resultOrder = photographerMediaList;
+
+    // Sort latest to newest
+    //resultOrder = await resultOrder.sort((a, b) => b.date - a.date);
+
+    for(var i=0; i<resultOrder.length; i++)
+    {
+        resultOrder[i] = resultOrder[1];
     }
 
     return resultOrder;
 }
 
-function generateDateOrderList(mediaList, photographerMediaList){
-    var resultOrder = new Array(photographerMediaList.length);
-    for(var i=0; i<resultOrder.length; i++)
-    {
-        resultOrder[i] = photographerMediaList[i];
-    }
-    console.log(resultOrder);
-    for(var i=0; i<resultOrder.length; i++)
-    {
-        resultOrder[i] = resultOrder[0];
-    }
-
-    return resultOrder;
-}
-
-function generateTitleOrderList(mediaList, photographerMediaList){
+function generateTitleOrderList(photographerMediaList){
     var resultOrder = new Array(photographerMediaList.length);
     for(var i=0; i<resultOrder.length; i++)
     {
@@ -152,7 +156,7 @@ function generateTitleOrderList(mediaList, photographerMediaList){
 
 
 // Generate one photographer card
-function generateMediaCard(index, mediaList){
+function generateMediaCard(newMedia){
     const mediaCard = document.createElement("div");
     const mediaMedia = document.createElement("div");
     const mediaDesc = document.createElement("div");
@@ -167,7 +171,6 @@ function generateMediaCard(index, mediaList){
     mediaPrice.classList.add("mediaCard__desc__number"); 
     mediaLike.classList.add("mediaCard__desc__number"); 
 
-    const newMedia = mediaList[index];
     if(newMedia.image == undefined)
     {
         mediaMedia.innerHTML = "<video class=\"modalMedia_open\" controls> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + "</video>";
@@ -196,13 +199,13 @@ function generateMediaCard(index, mediaList){
 }
 
 // Generate the gallery
-function generateGallery(mediaList, photographerMediaList, orderedIndexList){
+function generateGallery(mediaList, orderList){
     while (gallery.firstChild) {
         gallery.removeChild(gallery.firstChild);
     }
 
-    for(var i=0; i<photographerMediaList.length; i++){
-        gallery.appendChild(generateMediaCard(orderedIndexList[i], mediaList));
+    for(var i=0; i<mediaList.length; i++){
+        gallery.appendChild(generateMediaCard(mediaList[orderList[i].index]));
     }
 }
 
