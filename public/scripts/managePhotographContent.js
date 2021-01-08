@@ -7,9 +7,6 @@ const photographerLikes = document.getElementById('photographerLikes');
 const photographerPrice = document.getElementById('photographerPrice');
 const selectOrder_roll = document.getElementById('selectedOrder');
 
-
-
-
 const urlParams = new URLSearchParams(window.location.search);
 const photographerID = urlParams.get('id');
 
@@ -27,13 +24,10 @@ getAsync().then((data) =>
     const photgrapherIndex = getPhotographer(photographerID, photographerList);
     const photographerMediaList = getPhotographerMediaList(photographerID, mediaList);
     const orderPopularity = generateOrderList(photographerMediaList, 'popularity');
-    console.log(orderPopularity);
     const orderDate = generateOrderList(photographerMediaList, 'date');
-    console.log(orderDate);
     const orderName = generateOrderList(photographerMediaList, 'name');
-    console.log(orderName);
 
-    generateProfile(photgrapherIndex, photographerList);
+    generateProfile(photgrapherIndex, photographerList, photographerMediaList);
     generateGallery(photographerMediaList, orderPopularity);
 
     selectOrder_roll.addEventListener('change', (event) => {
@@ -76,14 +70,17 @@ function getPhotographerMediaList(ID, baseMediaList)
             mediaList.push(baseMediaList[i]);
         }
     }
-    console.log(mediaList);
     return mediaList;
 }
 
 // Generate the photographer profil and footer numbers
-function generateProfile(index, photographerList){
+function generateProfile(index, photographerList, photographerMediaList){
     const photographer = photographerList[index];
-    const ammountOfLikes = 100; // TO DO
+    var ammountOfLikes =0;
+    for(var i=0; i<photographerMediaList.length; i++)
+    {
+        ammountOfLikes += photographerMediaList[i].likes;
+    }
 
     photographerName.innerText = photographer.name;
     photographerDesc.innerHTML = "<strong>" + photographer.city + ", " + photographer.country + "</strong> <br>" + photographer.tagline + "<br>";
@@ -96,7 +93,6 @@ function generateProfile(index, photographerList){
     photographerLikes.innerHTML = ammountOfLikes + " <i class=\"fas fa-heart\"></i>";
     photographerPrice.innerHTML = photographer.price + "$ / day";
 }
-
 
 // generate a new list of index re-arranged based on the order type
 function generateOrderList(mediaList, type){
@@ -184,8 +180,6 @@ function generateGallery(mediaList, orderList){
         gallery.appendChild(generateMediaCard(mediaList[orderList[i].index]));
     }
 }
-
-
 
 /*
 <div class="mediaCard">
