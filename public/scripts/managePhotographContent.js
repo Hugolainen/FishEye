@@ -112,48 +112,24 @@ function generateOrderList(mediaList, type){
         orderList.push(mediaItem);
     }
 
-    if(type === "name")
+    if(type == 'name')
     {
-        return orderList.sort((a, b) => b.name - a.name);
+        return orderList.sort(function(a, b){
+            if(a.name < b.name) { return -1; }
+            if(a.name > b.name) { return 1; }
+            return 0;
+        })
     }
-    else if(type === "date"){
-        return orderList.sort((a, b) => b.date - a.date);
+    else if(type == 'date'){
+        return orderList.sort(function(a,b){
+            // Turn the strings into dates, and then subtract them to get a value that is either negative, positive, or zero.
+            return new Date(b.date) - new Date(a.date);
+          });
     }
     else{
         return orderList.sort((a, b) => b.likes - a.likes);
     }
 }
-
-function generateDateOrderList(photographerMediaList){
-    var resultOrder = photographerMediaList;
-
-    // Sort latest to newest
-    //resultOrder = await resultOrder.sort((a, b) => b.date - a.date);
-
-    for(var i=0; i<resultOrder.length; i++)
-    {
-        resultOrder[i] = resultOrder[1];
-    }
-
-    return resultOrder;
-}
-
-function generateTitleOrderList(photographerMediaList){
-    var resultOrder = new Array(photographerMediaList.length);
-    for(var i=0; i<resultOrder.length; i++)
-    {
-        resultOrder[i] = photographerMediaList[i];
-    }
-
-    for(var i=0; i<resultOrder.length; i++)
-    {
-        resultOrder[i] = resultOrder[2];
-    }
-
-    return resultOrder;
-}
-
-
 
 // Generate one photographer card
 function generateMediaCard(newMedia){
