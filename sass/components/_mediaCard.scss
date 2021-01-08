@@ -1,6 +1,6 @@
 .mediaCard{
 
-    width: fit-content;
+    width: 350px;
     margin: 20px auto;
 
     &__image{
@@ -43,16 +43,21 @@
         display: flex;
         justify-content: flex-end;
         color: $color-secondaryEmpty-text;
+        max-width: inherit;
 
         &__name{
             font-size: 24px;
             margin-right: auto;
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         &__number{
             font-size: 24px;
             font-weight: bold;
             margin-left: 20px;
+            white-space: nowrap;
         }
     }
 }
