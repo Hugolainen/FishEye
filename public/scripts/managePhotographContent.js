@@ -10,6 +10,8 @@ const selectOrder_roll = document.getElementById('selectedOrder');
 const urlParams = new URLSearchParams(window.location.search);
 const photographerID = urlParams.get('id');
 
+let selectedOrder;
+
 async function getAsync() 
 {
   let response = await fetch(`https://hugolainen.github.io/FishEye/public/data/FishEyeData.json`);
@@ -26,28 +28,32 @@ getAsync().then((data) =>
     const orderPopularity = generateOrderList(photographerMediaList, 'popularity');
     const orderDate = generateOrderList(photographerMediaList, 'date');
     const orderName = generateOrderList(photographerMediaList, 'name');
+    selectedOrder = orderPopularity;
 
     generateProfile(photgrapherIndex, photographerList, photographerMediaList);
-    generateGallery(photographerMediaList, orderPopularity);
+    generateGallery(photographerMediaList, selectedOrder);
 
     selectOrder_roll.addEventListener('change', (event) => {
         if(event.target.value == "date")
         {
-            generateGallery(photographerMediaList, orderDate);
+            selectedOrder = orderDate;
         }
         else if(event.target.value == 'title')
         {
-            generateGallery(photographerMediaList, orderName);
+            selectedOrder = orderName;
         }
         else{
-            generateGallery(photographerMediaList, orderPopularity);
+            selectedOrder = orderPopularity;
         }
+        generateGallery(photographerMediaList, selectedOrder);
     });
 
     var modalMedia_Opener = document.getElementsByClassName("modalMedia_open"); 
-    for(var i=0;i<modalMedia_Opener.length;i++){ 
+    for(let i=0;i<modalMedia_Opener.length;i++){ 
         modalMedia_Opener[i].addEventListener("click", () => { 
             launchModalMedia();
+            const focusMedia = photographerMediaList[selectedOrder[i].index];
+            generateFocusElement(focusMedia);
         }); 
     }
 }); 

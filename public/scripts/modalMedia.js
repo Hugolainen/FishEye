@@ -11,6 +11,20 @@ function launchModalMedia() {
   modalMedia.style.display = "block";
 }
 
+function generateFocusElement(media){
+  
+  if(media.image == undefined)
+  {
+    imgShow.innerHTML = "<video controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
+  }
+  else{
+    imgShow.innerHTML= "<img src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
+  } 
+  
+  
+  imgName.innerHTML= media.alt;
+}
+
 // close modal with "cross" or after successful submit
 modalMedia_Close.addEventListener('click', ($event) => {
   $event.preventDefault();
@@ -21,3 +35,14 @@ modalMedia_Close.addEventListener('click', ($event) => {
 function closeModalMedia() {
   modalMedia.style.display = "none";
 }
+
+prevImg.addEventListener('click', ($event) => {
+  $event.preventDefault();
+  prevImg();
+});
+
+
+nextImg.addEventListener('click', ($event) => {
+  $event.preventDefault();
+  nextImg();
+});
