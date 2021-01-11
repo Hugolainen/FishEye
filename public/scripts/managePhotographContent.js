@@ -11,6 +11,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const photographerID = urlParams.get('id');
 
 let selectedOrder;
+let modalMediaIndex = 0;
 
 async function getAsync() 
 {
@@ -28,11 +29,14 @@ getAsync().then((data) =>
     const orderPopularity = generateOrderList(photographerMediaList, 'popularity');
     const orderDate = generateOrderList(photographerMediaList, 'date');
     const orderName = generateOrderList(photographerMediaList, 'name');
+    const gallerySize = photographerMediaList.length;
     selectedOrder = orderPopularity;
 
     generateProfile(photgrapherIndex, photographerList, photographerMediaList);
     generateGallery(photographerMediaList, selectedOrder);
+    generateModalMediaClickEvents();
 
+    // List select to modify the order
     selectOrder_roll.addEventListener('change', (event) => {
         if(event.target.value == "date")
         {
@@ -46,15 +50,61 @@ getAsync().then((data) =>
             selectedOrder = orderPopularity;
         }
         generateGallery(photographerMediaList, selectedOrder);
+        generateModalMediaClickEvents();
     });
 
-    var modalMedia_Opener = document.getElementsByClassName("modalMedia_open"); 
-    for(let i=0;i<modalMedia_Opener.length;i++){ 
-        modalMedia_Opener[i].addEventListener("click", () => { 
-            launchModalMedia();
-            const focusMedia = photographerMediaList[selectedOrder[i].index];
-            generateFocusElement(focusMedia);
-        }); 
+
+    function getModalMedia(modalIndex){
+        const index = selectedOrder[modalIndex].index;
+        return photographerMediaList[index];
+    }
+
+    // Generation of modal media
+    function generateFocusElement(modalIndex){
+        const media = getModalMedia(modalIndex);
+        if(media.image == undefined)
+        {
+        imgShow.innerHTML = "<video controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
+        }
+        else{
+        imgShow.innerHTML= "<img src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
+        } 
+        
+        imgName.innerHTML= media.alt;
+    }
+
+    // Event to move to next media
+    nextImg.addEventListener('click', ($event) => {
+        $event.preventDefault();
+        goToNextImg();
+    });
+
+    function goToNextImg(){
+        modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"forward");
+        generateFocusElement(modalMediaIndex);
+    }
+
+    // Event to move to previous media
+    prevImg.addEventListener('click', ($event) => {
+        $event.preventDefault();
+        goToPrevImg();
+    });
+
+    function goToPrevImg(){
+        modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"backward");
+        generateFocusElement(modalMediaIndex);
+    }
+
+     // Generate the modal media
+    function generateModalMediaClickEvents(){
+        var modalMedia_Opener = document.getElementsByClassName("modalMedia_open"); 
+        for(let i=0;i<modalMedia_Opener.length;i++){ 
+            modalMedia_Opener[i].addEventListener("click", () => { 
+                launchModalMedia();
+                modalMediaIndex = i;
+                generateFocusElement(modalMediaIndex);
+            }); 
+        }
     }
 }); 
 
@@ -194,6 +244,10 @@ function generateGallery(mediaList, orderList){
         gallery.appendChild(generateMediaCard(mediaList[orderList[i].index]));
     }
 }
+
+
+
+
 
 /*
 <div class="mediaCard">
