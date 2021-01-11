@@ -10,6 +10,9 @@ const selectOrder_roll = document.getElementById('selectedOrder');
 const urlParams = new URLSearchParams(window.location.search);
 const photographerID = urlParams.get('id');
 
+let selectedOrder;
+let modalMediaIndex = 0;
+
 async function getAsync() 
 {
   let response = await fetch(`https://hugolainen.github.io/FishEye/public/data/FishEyeData.json`);
@@ -23,32 +26,128 @@ getAsync().then((data) =>
     const photographerList = data.photographers;
     const photgrapherIndex = getPhotographer(photographerID, photographerList);
     const photographerMediaList = getPhotographerMediaList(photographerID, mediaList);
-    const orderPopularity = generateOrderList(photographerMediaList, 'popularity');
+    let orderPopularity = generateOrderList(photographerMediaList, 'popularity');
     const orderDate = generateOrderList(photographerMediaList, 'date');
     const orderName = generateOrderList(photographerMediaList, 'name');
+    const gallerySize = photographerMediaList.length;
+    selectedOrder = orderPopularity;
 
     generateProfile(photgrapherIndex, photographerList, photographerMediaList);
-    generateGallery(photographerMediaList, orderPopularity);
+    generateGallery(photographerMediaList, selectedOrder);
+    generateModalMediaClickEvents();
+    generateLikeEvent();
 
+    // List select to modify the order
     selectOrder_roll.addEventListener('change', (event) => {
         if(event.target.value == "date")
         {
-            generateGallery(photographerMediaList, orderDate);
+            selectedOrder = orderDate;
         }
         else if(event.target.value == 'title')
         {
-            generateGallery(photographerMediaList, orderName);
+            selectedOrder = orderName;
         }
         else{
-            generateGallery(photographerMediaList, orderPopularity);
+            selectedOrder = orderPopularity;
         }
+        generateGallery(photographerMediaList, selectedOrder);
+        generateModalMediaClickEvents();
     });
 
-    var modalMedia_Opener = document.getElementsByClassName("modalMedia_open"); 
-    for(var i=0;i<modalMedia_Opener.length;i++){ 
-        modalMedia_Opener[i].addEventListener("click", () => { 
-            launchModalMedia();
-        }); 
+
+    function getModalMedia(modalIndex){
+        const index = selectedOrder[modalIndex].index;
+        return photographerMediaList[index];
+    }
+
+    // Generation of modal media
+    function generateFocusElement(modalIndex){
+        const media = getModalMedia(modalIndex);
+        if(media.image == undefined)
+        {
+        imgShow.innerHTML = "<video controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
+        }
+        else{
+        imgShow.innerHTML= "<img src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
+        } 
+        
+        imgName.innerHTML= media.alt;
+    }
+
+    // Event to move to next media
+    nextImg.addEventListener('click', ($event) => {
+        $event.preventDefault();
+        goToNextImg();
+    });
+
+    function goToNextImg(){
+        modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"forward");
+        generateFocusElement(modalMediaIndex);
+    }
+
+    // Event to move to previous media
+    prevImg.addEventListener('click', ($event) => {
+        $event.preventDefault();
+        goToPrevImg();
+    });
+
+    function goToPrevImg(){
+        modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"backward");
+        generateFocusElement(modalMediaIndex);
+    }
+
+     // Generate the modal media
+    function generateModalMediaClickEvents(){
+        var modalMedia_Opener = document.getElementsByClassName("modalMedia_open"); 
+        for(let i=0;i<modalMedia_Opener.length;i++){ 
+            modalMedia_Opener[i].addEventListener("click", () => { 
+                launchModalMedia();
+                modalMediaIndex = i;
+                generateFocusElement(modalMediaIndex);
+            }); 
+        }
+    }
+
+    // Manage the like increase
+    function generateLikeEvent(){
+        var likeButton = document.getElementsByClassName('add_like_button');
+        for(let i=0;i<likeButton.length;i++){ 
+            likeButton[i].addEventListener("click", () => { 
+                likeButton[i].innerHTML = (parseInt(likeButton[i].textContent, 10) +1) + " <i class=\"fas fa-heart\"></i>";
+                photographerLikes.innerHTML = (parseInt(photographerLikes.textContent, 10) +1) + " <i class=\"fas fa-heart\"></i>";
+
+                for(let j=0; j<photographerMediaList.length; j++){
+                    if(orderPopularity[i].name == photographerMediaList[j].alt){
+                        photographerMediaList[j].likes = parseInt(photographerMediaList[j].likes) +1;
+                    }
+                }
+
+                if(i>0)
+                {
+                    if(likeButton[i].textContent > likeButton[i-1].textContent)
+                    {
+                        var temp = orderPopularity[i];
+                        orderPopularity[i] = orderPopularity[i-1];
+                        orderPopularity[i-1] = temp;
+                    }
+                }
+            }); 
+        }
+    }
+
+    // Use of keyboard arrow keys to do the modalMedia rotation
+    document.onkeydown = checkKey;
+    function checkKey(e) {
+        if(modalMedia.style.display == "block")
+        {
+            e = e || window.event;
+            if (e.keyCode == '37') {
+                goToPrevImg();
+            }
+            else if (e.keyCode == '39') {
+                goToNextImg();
+            }
+        }
     }
 }); 
 
@@ -150,6 +249,7 @@ function generateMediaCard(newMedia){
     mediaName.classList.add("mediaCard__desc__name"); 
     mediaPrice.classList.add("mediaCard__desc__number"); 
     mediaLike.classList.add("mediaCard__desc__number"); 
+    mediaLike.classList.add("add_like_button"); 
 
     if(newMedia.image == undefined)
     {

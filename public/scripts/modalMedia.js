@@ -21,3 +21,29 @@ modalMedia_Close.addEventListener('click', ($event) => {
 function closeModalMedia() {
   modalMedia.style.display = "none";
 }
+
+// Manage the decrementation and incrementation of modal media index
+function makeItRoll(indexInitial, gallerySize, direction)
+{
+  if(direction == "forward")
+  {
+    if(indexInitial >= gallerySize-1)
+    {
+      return 0;
+    }
+    else
+    {
+      return indexInitial+1;
+    }
+  }
+  else{
+    if(indexInitial <= 0)
+    {
+      return gallerySize-1;
+    }
+    else
+    {
+      return indexInitial-1;
+    }
+  }
+}
