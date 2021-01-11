@@ -106,7 +106,6 @@ function validateMessage(){
   }
 }
 
-
 // Submit button
 // Prevent the normal messages of the input to appear / and to reload
 // Valide every input one by one (could aslo be all together)
@@ -119,6 +118,7 @@ modalForm_Submit.addEventListener('click', ($event) => {
   && validateEmail()
   && validateMessage())
   {
+    publishForm();
     submitSucess_message.style.display = "block";
     setTimeout(closeModalForm, 2000);
     setTimeout(cleanForm, 2000);
@@ -131,4 +131,12 @@ function cleanForm(){
   formLast.value = "";
   formEmail.value = "";
   formMessage.value = "";
+}
+
+function publishForm()
+{
+  console.log(formFirst.value);
+  console.log(formLast.value);
+  console.log(formEmail.value);
+  console.log(formMessage.value);
 }
