@@ -35,7 +35,6 @@ getAsync().then((data) =>
     generateProfile(photgrapherIndex, photographerList, photographerMediaList);
     generateGallery(photographerMediaList, selectedOrder);
     generateModalMediaClickEvents();
-    generateLikeEvent();
 
     // List select to modify the order
     selectOrder_roll.addEventListener('change', (event) => {
@@ -96,22 +95,18 @@ getAsync().then((data) =>
         generateFocusElement(modalMediaIndex);
     }
 
-     // Generate the modal media
+     // Generate the click events on the media cards (open modalMedia + like)
     function generateModalMediaClickEvents(){
         var modalMedia_Opener = document.getElementsByClassName("modalMedia_open"); 
+        var likeButton = document.getElementsByClassName('add_like_button');
+
         for(let i=0;i<modalMedia_Opener.length;i++){ 
             modalMedia_Opener[i].addEventListener("click", () => { 
                 launchModalMedia();
                 modalMediaIndex = i;
                 generateFocusElement(modalMediaIndex);
             }); 
-        }
-    }
 
-    // Manage the like increase
-    function generateLikeEvent(){
-        var likeButton = document.getElementsByClassName('add_like_button');
-        for(let i=0;i<likeButton.length;i++){ 
             likeButton[i].addEventListener("click", () => { 
                 likeButton[i].innerHTML = (parseInt(likeButton[i].textContent, 10) +1) + " <i class=\"fas fa-heart\"></i>";
                 photographerLikes.innerHTML = (parseInt(photographerLikes.textContent, 10) +1) + " <i class=\"fas fa-heart\"></i>";
@@ -124,11 +119,16 @@ getAsync().then((data) =>
 
                 if(i>0)
                 {
-                    if(likeButton[i].textContent > likeButton[i-1].textContent)
+                    if(photographerMediaList[orderPopularity[i].index].likes > photographerMediaList[orderPopularity[i-1].index].likes)
                     {
                         var temp = orderPopularity[i];
                         orderPopularity[i] = orderPopularity[i-1];
                         orderPopularity[i-1] = temp;
+                        if(selectOrder_roll.value == "popularity"){
+                            selectedOrder = orderPopularity;
+                            generateGallery(photographerMediaList, selectedOrder);
+                            generateModalMediaClickEvents();
+                        }
                     }
                 }
             }); 
@@ -149,6 +149,7 @@ getAsync().then((data) =>
             }
         }
     }
+
 }); 
 
 // get the index of the photographer based on his ID number
