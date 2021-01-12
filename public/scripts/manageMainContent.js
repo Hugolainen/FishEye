@@ -44,92 +44,23 @@ request.onload = function() {
     
         return photographerCard;
     }
-
+    
     // Lunch tagSelection event with the appropriate Tag and take care of nav display
-    tagSelectList[0].addEventListener('click', ($event) => {
-        tagSelectList[0].classList.add("--tagActive");
-        for(var i=1; i<tagSelectList.length; i++)
-        {
-                tagSelectList[i].classList.remove("--tagActive");
-        }
-        tagSelection("portrait");
-    });
-
-    tagSelectList[1].addEventListener('click', ($event) => {
-        tagSelectList[1].classList.add("--tagActive");
-        for(var i=0; i<tagSelectList.length; i++)
-        {
-            if(i != 1){
-                tagSelectList[i].classList.remove("--tagActive");
+    for(let i=0; i<tagSelectList.length; i++)
+    {
+        tagSelectList[i].addEventListener('click', ($event) => {
+            tagSelectList[i].classList.add("--tagActive");
+            for(var j=0; j<tagSelectList.length; j++)
+            {
+                if(j != i)
+                {
+                    tagSelectList[j].classList.remove("--tagActive");
+                }
             }
-        }
-        tagSelection("art");
-    });
-
-    tagSelectList[2].addEventListener('click', ($event) => {
-        tagSelectList[2].classList.add("--tagActive");
-        for(var i=0; i<tagSelectList.length; i++)
-        {
-            if(i != 2){
-                tagSelectList[i].classList.remove("--tagActive");
-            }
-        }
-        tagSelection("fashion");
-    });
-
-    tagSelectList[3].addEventListener('click', ($event) => {
-        tagSelectList[3].classList.add("--tagActive");
-        for(var i=0; i<tagSelectList.length; i++)
-        {
-            if(i != 3){
-                tagSelectList[i].classList.remove("--tagActive");
-            }
-        }
-        tagSelection("architecture");
-    });
-
-    tagSelectList[4].addEventListener('click', ($event) => {
-        tagSelectList[4].classList.add("--tagActive");
-        for(var i=0; i<tagSelectList.length; i++)
-        {
-            if(i != 4){
-                tagSelectList[i].classList.remove("--tagActive");
-            }
-        }
-        tagSelection("travel");
-    });
-
-    tagSelectList[5].addEventListener('click', ($event) => {
-        tagSelectList[5].classList.add("--tagActive");
-        for(var i=0; i<tagSelectList.length; i++)
-        {
-            if(i != 5){
-                tagSelectList[i].classList.remove("--tagActive");
-            }
-        }
-        tagSelection("sport");
-    });
-
-    tagSelectList[6].addEventListener('click', ($event) => {
-        tagSelectList[6].classList.add("--tagActive");
-        for(var i=0; i<tagSelectList.length; i++)
-        {
-            if(i != 6){
-                tagSelectList[i].classList.remove("--tagActive");
-            }
-        }
-        tagSelection("animals");
-    });
-
-    tagSelectList[7].addEventListener('click', ($event) => {
-        tagSelectList[7].classList.add("--tagActive");
-        for(var i=0; i<tagSelectList.length-1; i++)
-        {
-                tagSelectList[i].classList.remove("--tagActive");
-        }
-        tagSelection("events");
-    });
-
+            const tagSelected = (tagSelectList[i].textContent).slice(3).slice(0,-2).toLowerCase();
+            tagSelection(tagSelected);
+        });
+    }
 
     // Display only photographers with selected tag 
     function tagSelection(tagSelected) {
