@@ -3,6 +3,7 @@ const modalForm = document.getElementById('modalForm');
 const modalForm_Open = document.getElementById('modalForm_open');
 const modalForm_Close = document.getElementById('modalForm_close');
 const modalForm_Submit = document.getElementById('modalForm_submit');
+const modalForm_title = document.getElementById('modalForm_title');
 
 const formFirst = document.getElementById('first');
 const formLast = document.getElementById('last');

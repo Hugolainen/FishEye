@@ -30,7 +30,7 @@ request.onload = function() {
         photographerTags.classList.add("tagList"); 
     
         const newPhotographer = photographerList[index];
-        photographerName.innerHTML = "<a href=\"photographPage.html?id=" + newPhotographer.id + "\">  <img class=\"header__logo\" src=\"public/img/photographersIDphotos/" +newPhotographer.portrait + "\" alt=\"" + newPhotographer.name + "\" > <br>" + newPhotographer.name + "</a>";
+        photographerName.innerHTML = "<a href=\"photographPage.html?id=" + newPhotographer.id + "\">  <img class=\"header__logo\" src=\"public/img/photographersIDphotos/" +newPhotographer.portrait + "\" > <br>" + newPhotographer.name + "</a>";
         photographerDesk.innerHTML = "<strong>" + newPhotographer.city + ", " + newPhotographer.country + "</strong> <br>" + newPhotographer.tagline + "<br> <em> $" + newPhotographer.price + "/day </em>";
         for(var i=0; i<newPhotographer.tags.length; i++){
             const tag = document.createElement("li");

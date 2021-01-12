@@ -199,6 +199,14 @@ function generateProfile(index, photographerList, photographerMediaList){
     photographerProfilePhoto.innerHTML = "<img class=\"photographProfile__photo\" src=\"public/img/photographersIDphotos/" + photographer.portrait + "\" alt=\"" + photographer.name + "\" >";
     photographerLikes.innerHTML = ammountOfLikes + " <i class=\"fas fa-heart\"></i>";
     photographerPrice.innerHTML = photographer.price + "$ / day";
+
+    modalForm_title.innerHTML = "Contact me <br>" + photographer.name;
+    /*
+    <h1 id="modalForm_title"> 
+        Contact me <br>
+        photographerName
+    </h1>
+    */
 }
 
 // generate a new list of index re-arranged based on the order type
@@ -254,7 +262,7 @@ function generateMediaCard(newMedia){
 
     if(newMedia.image == undefined)
     {
-        mediaMedia.innerHTML = "<video> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + "</video>";
+        mediaMedia.innerHTML = "<video> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + ", closeup view </video>";
 
         /*
         <video class="modalMedia_open" controls> 
@@ -264,11 +272,11 @@ function generateMediaCard(newMedia){
         */
     }
     else{
-        mediaMedia.innerHTML = "<img src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + "\">";
+        mediaMedia.innerHTML = "<img src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + ", closeup view\">";
     } 
     mediaName.innerHTML = newMedia.alt;
     mediaPrice.innerHTML = newMedia.price + " $";
-    mediaLike.innerHTML = newMedia.likes + " <i class=\"fas fa-heart\"></i>";
+    mediaLike.innerHTML = newMedia.likes + " <i class=\"fas fa-heart\" aria-label=\"likes\"></i>";
 
     mediaDesc.appendChild(mediaName);
     mediaDesc.appendChild(mediaPrice);
