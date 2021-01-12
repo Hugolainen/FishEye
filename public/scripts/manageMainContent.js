@@ -1,5 +1,6 @@
 const gallery = document.getElementById('photographerGallery');
 const tagSelectList_element = document.getElementById('navTagList');
+const skipToContentElement = document.querySelector('.skipToContent');
 const tagSelectList = tagSelectList_element.children;
 
 let requestURL = 'https://hugolainen.github.io/FishEye/public/data/FishEyeData.json';
@@ -151,6 +152,18 @@ request.onload = function() {
             }
         }
     }
+
+
+        // Use of keyboard arrow keys to do the modalMedia rotation
+        document.onkeydown = checkKey;
+        function checkKey(e) {
+            e = e || window.event;
+
+            if(e.keyCode == '9')
+            {
+                skipToContentElement.style.display = "block";
+            }
+        }
 }
 
 

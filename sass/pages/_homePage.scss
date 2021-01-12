@@ -16,9 +16,7 @@
     --leftPosSkip: calc(50% - 85px);
     left: var(--leftPosSkip);
 
-    @media (max-width: $breakpoint-minMobile) {
-        display: none;
-    }
+    display: none;
 }
 
 .main{

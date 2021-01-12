@@ -138,9 +138,9 @@ getAsync().then((data) =>
     // Use of keyboard arrow keys to do the modalMedia rotation
     document.onkeydown = checkKey;
     function checkKey(e) {
+        e = e || window.event;
         if(modalMedia.style.display == "block")
         {
-            e = e || window.event;
             if (e.keyCode == '37') {
                 goToPrevImg();
             }
