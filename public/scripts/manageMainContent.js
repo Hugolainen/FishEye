@@ -27,13 +27,16 @@ request.onload = function() {
         photographerCard.classList.add("photographerCard"); 
         photographerName.classList.add("photographerCard__name"); 
         photographerDesk.classList.add("photographerCard__desc"); 
+        photographerDesk.setAttribute("tabindex", "0");
         photographerTags.classList.add("tagList"); 
+        photographerTags.setAttribute("tabindex", "0");
     
         const newPhotographer = photographerList[index];
         photographerName.innerHTML = "<a href=\"photographPage.html?id=" + newPhotographer.id + "\">  <img class=\"header__logo\" src=\"public/img/photographersIDphotos/" +newPhotographer.portrait + "\" > <br>" + newPhotographer.name + "</a>";
         photographerDesk.innerHTML = "<strong>" + newPhotographer.city + ", " + newPhotographer.country + "</strong> <br>" + newPhotographer.tagline + "<br> <em> $" + newPhotographer.price + "/day </em>";
         for(var i=0; i<newPhotographer.tags.length; i++){
             const tag = document.createElement("li");
+            tag.setAttribute("tabindex", "0");
             tag.innerHTML = "<a> #" + newPhotographer.tags[i] + "</a></li>";
             photographerTags.appendChild(tag);
         }
@@ -84,17 +87,16 @@ request.onload = function() {
         }
     }
 
+    // Use of keyboard arrow keys to do the modalMedia rotation
+    document.onkeydown = checkKey;
+    function checkKey(e) {
+        e = e || window.event;
 
-        // Use of keyboard arrow keys to do the modalMedia rotation
-        document.onkeydown = checkKey;
-        function checkKey(e) {
-            e = e || window.event;
-
-            if(e.keyCode == '9')
-            {
-                skipToContentElement.style.display = "block";
-            }
+        if(e.keyCode == '9')
+        {
+            skipToContentElement.style.display = "block";
         }
+    }
 }
 
 
