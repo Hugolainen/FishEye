@@ -36,7 +36,6 @@ request.onload = function() {
         photographerDesk.innerHTML = "<strong>" + newPhotographer.city + ", " + newPhotographer.country + "</strong> <br>" + newPhotographer.tagline + "<br> <em> $" + newPhotographer.price + "/day </em>";
         for(var i=0; i<newPhotographer.tags.length; i++){
             const tag = document.createElement("li");
-            tag.setAttribute("tabindex", "0");
             tag.innerHTML = "<a> #" + newPhotographer.tags[i] + "</a></li>";
             photographerTags.appendChild(tag);
         }

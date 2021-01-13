@@ -196,7 +196,7 @@ function generateProfile(index, photographerList, photographerMediaList){
         tag.innerHTML = "#" + photographer.tags[i] + "</li>";
         photographerTags.appendChild(tag);
     }
-    photographerProfilePhoto.innerHTML = "<img class=\"photographProfile__photo\" src=\"public/img/photographersIDphotos/" + photographer.portrait + "\" alt=\"" + photographer.name + "\" >";
+    photographerProfilePhoto.innerHTML = "<img tabindex=0 class=\"photographProfile__photo\" src=\"public/img/photographersIDphotos/" + photographer.portrait + "\" alt=\"" + photographer.name + "\" >";
     photographerLikes.innerHTML = ammountOfLikes + " <i class=\"fas fa-heart\"></i>";
     photographerPrice.innerHTML = photographer.price + "$ / day";
 
@@ -254,10 +254,14 @@ function generateMediaCard(newMedia){
     mediaCard.classList.add("mediaCard"); 
     mediaMedia.classList.add("mediaCard__image"); 
     mediaMedia.classList.add("modalMedia_open");
+    mediaMedia.setAttribute("tabindex", "0");
     mediaDesc.classList.add("mediaCard__desc"); 
     mediaName.classList.add("mediaCard__desc__name"); 
+    mediaName.setAttribute("tabindex", "0");
     mediaPrice.classList.add("mediaCard__desc__number"); 
+    mediaPrice.setAttribute("tabindex", "0");
     mediaLike.classList.add("mediaCard__desc__number"); 
+    mediaLike.setAttribute("tabindex", "0");
     mediaLike.classList.add("add_like_button"); 
 
     if(newMedia.image == undefined)

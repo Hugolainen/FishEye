@@ -10,7 +10,7 @@
 
     <body>
         <header class="header" aria-label="banner">
-            <a href = 'index.html'>
+            <a href = 'index.html' tabindex=0>
                 <img class="header__logo" src="public/img/logo.png" alt="Fisheye Home page"> </img>
             </a>
         </header>
@@ -18,9 +18,9 @@
         <main class="main" aria-label="main">
             <section class="photographProfile">
                 <div class="photographProfile__desc">
-                    <h1 id="photographerName">  </h1>
-                    <p id="photographerDesc"> </p>
-                    <ul class="tagList" id="photographerTags">
+                    <h1 id="photographerName" tabindex=0>  </h1>
+                    <p id="photographerDesc" tabindex=0> </p>
+                    <ul class="tagList" id="photographerTags" tabindex=0>
                     </ul>
                 </div>
 
@@ -32,21 +32,19 @@
                 </div>
             </section>
 
+            <footer class="photographerNumbers">
+              <span id="photographerLikes" tabindex=0> </span>
+              <span id="photographerPrice" tabindex=0> </span>
+            </footer>
+
             <div class="selectMenu">
-              <label> Order by </label>
+              <label tabindex=0> Order by </label>
                 <select id="selectedOrder">
                   <option value="popularity">Popularity</option>
                   <option value="date">Date</option>
                   <option value="title">Title</option>
               </select> 
             </div>
-
-
-
-            <footer class="photographerNumbers">
-                <span id="photographerLikes"> </span>
-                <span id="photographerPrice"> </span>
-            </footer>
 
             <content class="gallery" id="mediaGallery"> 
             </content>
