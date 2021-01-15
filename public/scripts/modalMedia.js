@@ -20,6 +20,7 @@ modalMedia_Close.addEventListener('click', ($event) => {
 // close modal form
 function closeModalMedia() {
   modalMedia.style.display = "none";
+  gallery.focus();
 }
 
 // Manage the decrementation and incrementation of modal media index

@@ -16,7 +16,6 @@ const email_errMessage = document.getElementById('email_errorMessage');
 const message_errMessage = document.getElementById('message_errorMessage');
 const submitSucess_message = document.getElementById('message-submitSucess');
 
-
 // Lunch modal event
 modalForm_Open.addEventListener('click', ($event) => {
   $event.preventDefault();
@@ -27,12 +26,14 @@ modalForm_Open.addEventListener('click', ($event) => {
 function launchModalForm() {
   modalForm.style.display = "block";
   modalForm_Open.style.display = "none";
+  modalForm.focus(); 
 }
 
 // close modal with "cross" or after successful submit
 modalForm_Close.addEventListener('click', ($event) => {
   $event.preventDefault();
   closeModalForm();
+  modalForm_Open.focus();
 });
 
 // close modal form
@@ -141,3 +142,4 @@ function publishForm()
   console.log(formEmail.value);
   console.log(formMessage.value);
 }
+

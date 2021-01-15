@@ -53,7 +53,6 @@ getAsync().then((data) =>
         generateModalMediaClickEvents();
     });
 
-
     function getModalMedia(modalIndex){
         const index = selectedOrder[modalIndex].index;
         return photographerMediaList[index];
@@ -64,10 +63,10 @@ getAsync().then((data) =>
         const media = getModalMedia(modalIndex);
         if(media.image == undefined)
         {
-        imgShow.innerHTML = "<video controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
+            imgShow.innerHTML = "<video controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
         }
         else{
-        imgShow.innerHTML= "<img src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
+            imgShow.innerHTML= "<img src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
         } 
         
         imgName.innerHTML= media.alt;
@@ -82,6 +81,7 @@ getAsync().then((data) =>
     function goToNextImg(){
         modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"forward");
         generateFocusElement(modalMediaIndex);
+        imgShow.focus();
     }
 
     // Event to move to previous media
@@ -93,6 +93,7 @@ getAsync().then((data) =>
     function goToPrevImg(){
         modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"backward");
         generateFocusElement(modalMediaIndex);
+        imgShow.focus();
     }
 
      // Generate the click events on the media cards (open modalMedia + like)
@@ -105,6 +106,7 @@ getAsync().then((data) =>
                 launchModalMedia();
                 modalMediaIndex = i;
                 generateFocusElement(modalMediaIndex);
+                modalMedia.focus();
             }); 
 
             likeButton[i].addEventListener("click", () => { 
@@ -254,7 +256,6 @@ function generateMediaCard(newMedia){
     mediaCard.classList.add("mediaCard"); 
     mediaMedia.classList.add("mediaCard__image"); 
     mediaMedia.classList.add("modalMedia_open");
-    mediaMedia.setAttribute("tabindex", "0");
     mediaDesc.classList.add("mediaCard__desc"); 
     mediaName.classList.add("mediaCard__desc__name"); 
     mediaName.setAttribute("tabindex", "0");
@@ -266,7 +267,7 @@ function generateMediaCard(newMedia){
 
     if(newMedia.image == undefined)
     {
-        mediaMedia.innerHTML = "<video> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + ", closeup view </video>";
+        mediaMedia.innerHTML = "<a href=\"#\" > <video alt=\"" + newMedia.alt + "\"> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + ", closeup view </video> </a>";
 
         /*
         <video class="modalMedia_open" controls> 
@@ -276,7 +277,7 @@ function generateMediaCard(newMedia){
         */
     }
     else{
-        mediaMedia.innerHTML = "<img src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + ", closeup view\">";
+        mediaMedia.innerHTML = "<a href=\"#\" > <img src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + ", closeup view\">  </a>";
     } 
     mediaName.innerHTML = newMedia.alt;
     mediaPrice.innerHTML = newMedia.price + " $";
@@ -301,6 +302,8 @@ function generateGallery(mediaList, orderList){
         gallery.appendChild(generateMediaCard(mediaList[orderList[i].index]));
     }
 }
+
+
 
 /*
 <div class="mediaCard">
