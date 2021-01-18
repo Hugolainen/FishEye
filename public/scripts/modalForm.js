@@ -33,7 +33,6 @@ function launchModalForm() {
 modalForm_Close.addEventListener('click', ($event) => {
   $event.preventDefault();
   closeModalForm();
-  modalForm_Open.focus();
 });
 
 // close modal form
@@ -47,6 +46,8 @@ function closeModalForm() {
   email_errMessage.style.display = "none";  
   message_errMessage.style.display = "none"; 
   submitSucess_message.style.display = "none"; 
+
+  modalForm_Open.focus();
 }
 
 // Specific function is confirm the patern of an email address

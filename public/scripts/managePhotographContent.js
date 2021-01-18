@@ -63,10 +63,10 @@ getAsync().then((data) =>
         const media = getModalMedia(modalIndex);
         if(media.image == undefined)
         {
-            imgShow.innerHTML = "<video controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
+            imgShow.innerHTML = "<video tabIndex=0 controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
         }
         else{
-            imgShow.innerHTML= "<img src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
+            imgShow.innerHTML= "<img tabIndex=0 src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
         } 
         
         imgName.innerHTML= media.alt;
@@ -76,24 +76,24 @@ getAsync().then((data) =>
     nextImg.addEventListener('click', ($event) => {
         $event.preventDefault();
         goToNextImg();
+        imgShow.focus();
     });
 
     function goToNextImg(){
         modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"forward");
         generateFocusElement(modalMediaIndex);
-        imgShow.focus();
     }
 
     // Event to move to previous media
     prevImg.addEventListener('click', ($event) => {
         $event.preventDefault();
         goToPrevImg();
+        imgShow.focus();
     });
 
     function goToPrevImg(){
         modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"backward");
         generateFocusElement(modalMediaIndex);
-        imgShow.focus();
     }
 
      // Generate the click events on the media cards (open modalMedia + like)
