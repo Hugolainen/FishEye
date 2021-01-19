@@ -8,10 +8,9 @@ Link to the website : https://hugolainen.github.io/FishEye/
 Objectives:
 * Accessible & inclusive content (keyboard navigation, ARIA, sight-inpared focus)
 * Vanilla JavaScript
-  - XML HTTP request
   - Async programming
   - Object Oriented Programming
   - Factory Method Pattern
 * Automatic page creation
-  - Content patern 
-  - JSON file
+  - External JSON file
+  - XML HTTP request
