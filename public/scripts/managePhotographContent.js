@@ -35,7 +35,7 @@ getAsync().then((data) =>
     generateProfile(photgrapherIndex, photographerList, photographerMediaList);
     generateGallery(photographerMediaList, selectedOrder);
     generateModalMediaClickEvents();
-
+    
     // List select to modify the order
     selectOrder_roll.addEventListener('change', (event) => {
         if(event.target.value == "date")
@@ -151,7 +151,6 @@ getAsync().then((data) =>
             }
         }
     }
-
 }); 
 
 // get the index of the photographer based on his ID number
@@ -244,54 +243,6 @@ function generateOrderList(mediaList, type){
     }
 }
 
-// Generate one photographer card
-function generateMediaCard(newMedia){
-    const mediaCard = document.createElement("div");
-    const mediaMedia = document.createElement("div");
-    const mediaDesc = document.createElement("div");
-    const mediaName = document.createElement("p");
-    const mediaPrice = document.createElement("p");
-    const mediaLike = document.createElement("p");
-
-    mediaCard.classList.add("mediaCard"); 
-    mediaMedia.classList.add("mediaCard__image"); 
-    mediaMedia.classList.add("modalMedia_open");
-    mediaDesc.classList.add("mediaCard__desc"); 
-    mediaName.classList.add("mediaCard__desc__name"); 
-    mediaName.setAttribute("tabindex", "0");
-    mediaPrice.classList.add("mediaCard__desc__number"); 
-    mediaPrice.setAttribute("tabindex", "0");
-    mediaLike.classList.add("mediaCard__desc__number"); 
-    mediaLike.setAttribute("tabindex", "0");
-    mediaLike.classList.add("add_like_button"); 
-
-    if(newMedia.image == undefined)
-    {
-        mediaMedia.innerHTML = "<a href=\"#\" > <video alt=\"" + newMedia.alt + "\"> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + ", closeup view </video> </a>";
-
-        /*
-        <video class="modalMedia_open" controls> 
-        <source src="public/img/media/Travel_Rock_Mountains.mp4" type="video/mp4"> 
-        test
-        </video>
-        */
-    }
-    else{
-        mediaMedia.innerHTML = "<a href=\"#\" > <img src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + ", closeup view\">  </a>";
-    } 
-    mediaName.innerHTML = newMedia.alt;
-    mediaPrice.innerHTML = newMedia.price + " $";
-    mediaLike.innerHTML = newMedia.likes + " <i class=\"fas fa-heart\" aria-label=\"likes\"></i>";
-
-    mediaDesc.appendChild(mediaName);
-    mediaDesc.appendChild(mediaPrice);
-    mediaDesc.appendChild(mediaLike);
-    mediaCard.appendChild(mediaMedia);
-    mediaCard.appendChild(mediaDesc);
-
-    return mediaCard;
-}
-
 // Generate the gallery
 function generateGallery(mediaList, orderList){
     while (gallery.firstChild) {
@@ -303,38 +254,117 @@ function generateGallery(mediaList, orderList){
     }
 }
 
+// Call the factory constructors to build a mediaCard
+function generateMediaCard(media){
+    let cardObj = new mediaCardPartsFactory("card", media);
+    let descObj = new mediaCardPartsFactory("desc", media);
+    
+    if(media.image == undefined){
+        var mediaObj = new mediaCardPartsFactory("video", media);
+    }
+    else{
+        var mediaObj  = new mediaCardPartsFactory("image", media);
+    }
+    cardObj.mediaCard.appendChild(mediaObj.mediaMedia);
+    cardObj.mediaCard.appendChild(descObj.mediaDesc);
+
+    return cardObj.mediaCard;
+}
+
+// Intermediary between the actual factories classes and the user
+class mediaCardPartsFactory{
+    constructor(type, mediaData){
+        if(type === "card"){
+            return new MediaFactory_card();
+        }
+
+        if(type === "desc"){
+            return new MediaFactory_desc(mediaData);
+        }
+
+        if(type === "video"){
+            return new MediaFactory_video(mediaData);
+        }
+
+        if(type === "image"){
+            return new MediaFactory_image(mediaData);
+        }
+    }
+}
+
+// Various factories used to build a mediaCard
+class MediaFactory_card{
+    constructor(){
+        this.mediaCard = document.createElement("div");
+        this.mediaCard.classList.add("mediaCard"); 
+    }
+}
+
+class MediaFactory_video{
+    constructor(mediaData){
+        this.mediaMedia = document.createElement("div");
+        this.mediaMedia.classList.add("mediaCard__image"); 
+        this.mediaMedia.classList.add("modalMedia_open");
+        this.mediaMedia.innerHTML = "<a href=\"#\" > <video alt=\"" + mediaData.alt + "\"> <source src=\"public/img/media/" + mediaData.video + "\" type=\"video/mp4\">" + mediaData.alt + ", closeup view </video> </a>";
+    }
+}
+
+class MediaFactory_image{
+    constructor(mediaData){
+        this.mediaMedia = document.createElement("div");
+        this.mediaMedia.classList.add("mediaCard__image"); 
+        this.mediaMedia.classList.add("modalMedia_open");
+        this.mediaMedia.innerHTML = "<a href=\"#\" > <img src=\"public/img/media/" + mediaData.image + "\" alt=\""+ mediaData.alt + ", closeup view\">  </a>";
+    }
+}
+
+class MediaFactory_desc{
+    constructor(mediaData){
+        this.mediaDesc = document.createElement("div");
+        this.mediaName = document.createElement("p");
+        this.mediaPrice = document.createElement("p");
+        this.mediaLike = document.createElement("p");
+
+        this.mediaDesc.classList.add("mediaCard__desc"); 
+        this.mediaName.classList.add("mediaCard__desc__name"); 
+        this.mediaName.setAttribute("tabindex", "0");
+        this.mediaPrice.classList.add("mediaCard__desc__number"); 
+        this.mediaPrice.setAttribute("tabindex", "0");
+        this.mediaLike.classList.add("mediaCard__desc__number"); 
+        this.mediaLike.setAttribute("tabindex", "0");
+        this.mediaLike.classList.add("add_like_button"); 
+
+        this.mediaName.innerHTML = mediaData.alt;
+        this.mediaPrice.innerHTML = mediaData.price + " $";
+        this.mediaLike.innerHTML = mediaData.likes + " <i class=\"fas fa-heart\" aria-label=\"likes\"></i>";
+    
+        this.mediaDesc.appendChild(this.mediaName);
+        this.mediaDesc.appendChild(this.mediaPrice);
+        this.mediaDesc.appendChild(this.mediaLike);
+    }
+}
 
 
+/////////// Exemple HTML code for a media card
 /*
 <div class="mediaCard">
     <div class="mediaCard__image">  
         <img id="modalMedia_open" src="public/img/photographersIDphotos/MimiKeel.jpg" alt="">
+        
+        OR
+                
+        <video class="modalMedia_open" controls> 
+            <source src="public/img/media/Travel_Rock_Mountains.mp4" type="video/mp4"> 
+            video name
+        </video>
     </div>
+    
     <div class="mediaCard__desc"> 
         <p class="mediaCard__desc__name"> Rainbow </p>
         <p class="mediaCard__desc__number"> 70 $ </p>
         <p class="mediaCard__desc__number"> 12 <i class="fas fa-heart"></i> </p>
     </div>
 </div>
-*/
-
-/*
-async function getData(){
-    let requestURL = 'https://hugolainen.github.io/FishEye/public/data/FishEyeData.json';
-    let request = new XMLHttpRequest();
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
-    request.onload = function() {
-        const data = request.response;
-        return data;
-    }
-}
-
-getData().then(()=>{
-    mydata = getData();
-    console.log(myData);
-});
 */
 
 

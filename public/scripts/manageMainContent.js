@@ -97,7 +97,7 @@ function Photographer(data) {
     
         return photographerCard;
     };
-  }
+}
 
 // Use of keyboard arrow keys to do the modalMedia rotation
 document.onkeydown = checkKey;
