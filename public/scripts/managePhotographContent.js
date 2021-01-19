@@ -53,6 +53,7 @@ getAsync().then((data) =>
         generateModalMediaClickEvents();
     });
 
+    // Utility function to get the data at a specific index
     function getModalMedia(modalIndex){
         const index = selectedOrder[modalIndex].index;
         return photographerMediaList[index];
@@ -76,24 +77,24 @@ getAsync().then((data) =>
     nextImg.addEventListener('click', ($event) => {
         $event.preventDefault();
         goToNextImg();
-        imgShow.focus();
     });
 
     function goToNextImg(){
         modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"forward");
         generateFocusElement(modalMediaIndex);
+        imgShow.firstChild.focus();
     }
 
     // Event to move to previous media
     prevImg.addEventListener('click', ($event) => {
         $event.preventDefault();
         goToPrevImg();
-        imgShow.focus();
     });
 
     function goToPrevImg(){
         modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"backward");
         generateFocusElement(modalMediaIndex);
+        imgShow.firstChild.focus();
     }
 
      // Generate the click events on the media cards (open modalMedia + like)
@@ -137,20 +138,19 @@ getAsync().then((data) =>
         }
     }
 
-    // Use of keyboard arrow keys to do the modalMedia rotation
-    document.onkeydown = checkKey;
-    function checkKey(e) {
-        e = e || window.event;
-        if(modalMedia.style.display == "block")
-        {
-            if (e.keyCode == '37') {
-                goToPrevImg();
-            }
-            else if (e.keyCode == '39') {
-                goToNextImg();
-            }
+    // Add keyboard events to close the display
+    // Also add the use of keyboard arrow keys to do the modalMedia rotation
+    modalMedia.addEventListener('keyup', function (event) {
+        if (event.key === 'Escape') {
+            closeModalMedia();
         }
-    }
+        if (event.key == 'ArrowLeft') {
+            goToPrevImg();
+        }
+        if (event.key == 'ArrowRight') {
+            goToNextImg();
+        }
+      });
 }); 
 
 // get the index of the photographer based on his ID number
@@ -194,20 +194,14 @@ function generateProfile(index, photographerList, photographerMediaList){
     photographerDesc.innerHTML = "<strong>" + photographer.city + ", " + photographer.country + "</strong> <br>" + photographer.tagline + "<br>";
     for(var i=0; i<photographer.tags.length; i++){
         const tag = document.createElement("li");
-        tag.innerHTML = "#" + photographer.tags[i] + "</li>";
+        tag.innerHTML = "#" + photographer.tags[i];
         photographerTags.appendChild(tag);
     }
     photographerProfilePhoto.innerHTML = "<img tabindex=0 class=\"photographProfile__photo\" src=\"public/img/photographersIDphotos/" + photographer.portrait + "\" alt=\"" + photographer.name + "\" >";
-    photographerLikes.innerHTML = ammountOfLikes + " <i class=\"fas fa-heart\"></i>";
+    photographerLikes.innerHTML = ammountOfLikes + " <em class=\"invisible\"> likes</em> <i class=\"fas fa-heart\"></i>";
     photographerPrice.innerHTML = photographer.price + "$ / day";
 
     modalForm_title.innerHTML = "Contact me <br>" + photographer.name;
-    /*
-    <h1 id="modalForm_title"> 
-        Contact me <br>
-        photographerName
-    </h1>
-    */
 }
 
 // generate a new list of index re-arranged based on the order type
@@ -336,7 +330,7 @@ class MediaFactory_desc{
 
         this.mediaName.innerHTML = mediaData.alt;
         this.mediaPrice.innerHTML = mediaData.price + " $";
-        this.mediaLike.innerHTML = mediaData.likes + " <i class=\"fas fa-heart\" aria-label=\"likes\"></i>";
+        this.mediaLike.innerHTML = mediaData.likes + " <em class=\"invisible\"> likes</em> <i class=\"fas fa-heart\" aria-label=\"likes\"></i>";
     
         this.mediaDesc.appendChild(this.mediaName);
         this.mediaDesc.appendChild(this.mediaPrice);
@@ -367,4 +361,10 @@ class MediaFactory_desc{
 </div>
 */
 
-
+/////////// Example of HTML code for modalForm header
+/*
+<h1 id="modalForm_title"> 
+    Contact me <br>
+    photographerName
+</h1>
+*/

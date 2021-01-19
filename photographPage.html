@@ -21,7 +21,7 @@
                 <div class="photographProfile__desc">
                     <h1 id="photographerName" tabindex=0>  </h1>
                     <p id="photographerDesc" tabindex=0> </p>
-                    <ul class="tagList" id="photographerTags" tabindex=0>
+                    <ul class="tagList" id="photographerTags" tabindex=0 aria-label="Tags">
                     </ul>
                 </div>
 
@@ -47,7 +47,7 @@
               </select> 
             </div>
 
-            <content tabIndex=0 class="gallery" id="mediaGallery"> 
+            <content class="gallery" id="mediaGallery"> 
             </content>
         </main>
       </div>    
@@ -115,17 +115,17 @@
                   </span>
               </form>
             </div>
-            <span class="close closeModal-btn" id="modalForm_close" aria-label="Close Contact form">  <a href="#"> <i class="fas fa-times"></i> </a> </span>
+            <span class="close closeModal-btn" id="modalForm_close">  <a href="#" aria-label="Close Contact form"> <i class="fas fa-times"></i> </a> </span>
       </div>
 
       <div tabindex=0 class="modalMedia" id="modalMedia" aria-label="image closup view" aria-modal="true">
           <div class="modalMedia__body">
               <div id="imgShow"> </div>
               <p  tabindex=0 id="imgName">  </p>
-              <span class="navButton navButton__left" id="navButton_left" aria-label="Previous image"> <a href="#"> <i class="fas fa-chevron-left"></i> </a> </span>
-              <span class="navButton navButton__right" id="navButton_right" aria-label="Next image"> <a href="#"> <i class="fas fa-chevron-right"></i></a> </span>
+              <span class="navButton navButton__left" id="navButton_left"> <a href="#" aria-label="Previous image"> <i class="fas fa-chevron-left"></i> </a> </span>
+              <span class="navButton navButton__right" id="navButton_right"> <a href="#" aria-label="Next image"> <i class="fas fa-chevron-right"></i></a> </span>
           </div>
-          <span class="modalMedia__close" id="modalMedia_close" aria-label="Close dialog"> <a href="#"> <i class="fas fa-times"></i></a> </span>
+          <span class="modalMedia__close" id="modalMedia_close"> <a href="#" aria-label="Close dialog"> <i class="fas fa-times"></i></a> </span>
       </div>
 
         <script type="text/javascript" src="public/scripts/managePhotographContent.js"></script>

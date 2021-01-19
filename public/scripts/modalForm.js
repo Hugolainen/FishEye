@@ -115,7 +115,10 @@ function validateMessage(){
 // If OK, print a success message and open the success screen after 2s
 modalForm_Submit.addEventListener('click', ($event) => {
   $event.preventDefault();
+  submitForm();
+});
 
+function submitForm(){
   if(validateFirst()
   && validateLast()
   && validateEmail()
@@ -126,7 +129,7 @@ modalForm_Submit.addEventListener('click', ($event) => {
     setTimeout(closeModalForm, 2000);
     setTimeout(cleanForm, 2000);
   }
-});
+}
 
 // Empty the input text after a successful send
 function cleanForm(){
@@ -144,3 +147,12 @@ function publishForm()
   console.log(formMessage.value);
 }
 
+// Add keyboard events to close and submit the form
+modalForm.addEventListener('keyup', function (event) {
+  if (event.key === 'Escape') {
+    closeModalForm();
+  }
+  if (event.key === 'Enter') {
+    submitForm();
+  }
+});
