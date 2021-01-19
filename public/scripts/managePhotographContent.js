@@ -35,8 +35,7 @@ getAsync().then((data) =>
     generateProfile(photgrapherIndex, photographerList, photographerMediaList);
     generateGallery(photographerMediaList, selectedOrder);
     generateModalMediaClickEvents();
-    generateLikeEvent();
-
+    
     // List select to modify the order
     selectOrder_roll.addEventListener('change', (event) => {
         if(event.target.value == "date")
@@ -54,7 +53,7 @@ getAsync().then((data) =>
         generateModalMediaClickEvents();
     });
 
-
+    // Utility function to get the data at a specific index
     function getModalMedia(modalIndex){
         const index = selectedOrder[modalIndex].index;
         return photographerMediaList[index];
@@ -65,10 +64,10 @@ getAsync().then((data) =>
         const media = getModalMedia(modalIndex);
         if(media.image == undefined)
         {
-        imgShow.innerHTML = "<video controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
+            imgShow.innerHTML = "<video tabIndex=0 controls> <source src=\"public/img/media/" + media.video + "\" type=\"video/mp4\">" + media.alt + "</video>";
         }
         else{
-        imgShow.innerHTML= "<img src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
+            imgShow.innerHTML= "<img tabIndex=0 src=\"public/img/media/" + media.image + "\" alt=\""+ media.alt + "\">";
         } 
         
         imgName.innerHTML= media.alt;
@@ -83,6 +82,7 @@ getAsync().then((data) =>
     function goToNextImg(){
         modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"forward");
         generateFocusElement(modalMediaIndex);
+        imgShow.firstChild.focus();
     }
 
     // Event to move to previous media
@@ -94,24 +94,22 @@ getAsync().then((data) =>
     function goToPrevImg(){
         modalMediaIndex = makeItRoll(modalMediaIndex, gallerySize,"backward");
         generateFocusElement(modalMediaIndex);
+        imgShow.firstChild.focus();
     }
 
-     // Generate the modal media
+     // Generate the click events on the media cards (open modalMedia + like)
     function generateModalMediaClickEvents(){
         var modalMedia_Opener = document.getElementsByClassName("modalMedia_open"); 
+        var likeButton = document.getElementsByClassName('add_like_button');
+
         for(let i=0;i<modalMedia_Opener.length;i++){ 
             modalMedia_Opener[i].addEventListener("click", () => { 
                 launchModalMedia();
                 modalMediaIndex = i;
                 generateFocusElement(modalMediaIndex);
+                modalMedia.focus();
             }); 
-        }
-    }
 
-    // Manage the like increase
-    function generateLikeEvent(){
-        var likeButton = document.getElementsByClassName('add_like_button');
-        for(let i=0;i<likeButton.length;i++){ 
             likeButton[i].addEventListener("click", () => { 
                 likeButton[i].innerHTML = (parseInt(likeButton[i].textContent, 10) +1) + " <i class=\"fas fa-heart\"></i>";
                 photographerLikes.innerHTML = (parseInt(photographerLikes.textContent, 10) +1) + " <i class=\"fas fa-heart\"></i>";
@@ -124,31 +122,35 @@ getAsync().then((data) =>
 
                 if(i>0)
                 {
-                    if(likeButton[i].textContent > likeButton[i-1].textContent)
+                    if(photographerMediaList[orderPopularity[i].index].likes > photographerMediaList[orderPopularity[i-1].index].likes)
                     {
                         var temp = orderPopularity[i];
                         orderPopularity[i] = orderPopularity[i-1];
                         orderPopularity[i-1] = temp;
+                        if(selectOrder_roll.value == "popularity"){
+                            selectedOrder = orderPopularity;
+                            generateGallery(photographerMediaList, selectedOrder);
+                            generateModalMediaClickEvents();
+                        }
                     }
                 }
             }); 
         }
     }
 
-    // Use of keyboard arrow keys to do the modalMedia rotation
-    document.onkeydown = checkKey;
-    function checkKey(e) {
-        if(modalMedia.style.display == "block")
-        {
-            e = e || window.event;
-            if (e.keyCode == '37') {
-                goToPrevImg();
-            }
-            else if (e.keyCode == '39') {
-                goToNextImg();
-            }
+    // Add keyboard events to close the display
+    // Also add the use of keyboard arrow keys to do the modalMedia rotation
+    modalMedia.addEventListener('keyup', function (event) {
+        if (event.key === 'Escape') {
+            closeModalMedia();
         }
-    }
+        if (event.key == 'ArrowLeft') {
+            goToPrevImg();
+        }
+        if (event.key == 'ArrowRight') {
+            goToNextImg();
+        }
+      });
 }); 
 
 // get the index of the photographer based on his ID number
@@ -192,12 +194,14 @@ function generateProfile(index, photographerList, photographerMediaList){
     photographerDesc.innerHTML = "<strong>" + photographer.city + ", " + photographer.country + "</strong> <br>" + photographer.tagline + "<br>";
     for(var i=0; i<photographer.tags.length; i++){
         const tag = document.createElement("li");
-        tag.innerHTML = "#" + photographer.tags[i] + "</li>";
+        tag.innerHTML = "#" + photographer.tags[i];
         photographerTags.appendChild(tag);
     }
-    photographerProfilePhoto.innerHTML = "<img class=\"photographProfile__photo\" src=\"public/img/photographersIDphotos/" + photographer.portrait + "\" alt=\"" + photographer.name + "\" >";
-    photographerLikes.innerHTML = ammountOfLikes + " <i class=\"fas fa-heart\"></i>";
+    photographerProfilePhoto.innerHTML = "<img tabindex=0 class=\"photographProfile__photo\" src=\"public/img/photographersIDphotos/" + photographer.portrait + "\" alt=\"" + photographer.name + "\" >";
+    photographerLikes.innerHTML = ammountOfLikes + " <em class=\"invisible\"> likes</em> <i class=\"fas fa-heart\"></i>";
     photographerPrice.innerHTML = photographer.price + "$ / day";
+
+    modalForm_title.innerHTML = "Contact me <br>" + photographer.name;
 }
 
 // generate a new list of index re-arranged based on the order type
@@ -233,51 +237,6 @@ function generateOrderList(mediaList, type){
     }
 }
 
-// Generate one photographer card
-function generateMediaCard(newMedia){
-    const mediaCard = document.createElement("div");
-    const mediaMedia = document.createElement("div");
-    const mediaDesc = document.createElement("div");
-    const mediaName = document.createElement("p");
-    const mediaPrice = document.createElement("p");
-    const mediaLike = document.createElement("p");
-
-    mediaCard.classList.add("mediaCard"); 
-    mediaMedia.classList.add("mediaCard__image"); 
-    mediaMedia.classList.add("modalMedia_open");
-    mediaDesc.classList.add("mediaCard__desc"); 
-    mediaName.classList.add("mediaCard__desc__name"); 
-    mediaPrice.classList.add("mediaCard__desc__number"); 
-    mediaLike.classList.add("mediaCard__desc__number"); 
-    mediaLike.classList.add("add_like_button"); 
-
-    if(newMedia.image == undefined)
-    {
-        mediaMedia.innerHTML = "<video> <source src=\"public/img/media/" + newMedia.video + "\" type=\"video/mp4\">" + newMedia.alt + "</video>";
-
-        /*
-        <video class="modalMedia_open" controls> 
-        <source src="public/img/media/Travel_Rock_Mountains.mp4" type="video/mp4"> 
-        test
-        </video>
-        */
-    }
-    else{
-        mediaMedia.innerHTML = "<img src=\"public/img/media/" + newMedia.image + "\" alt=\""+ newMedia.alt + "\">";
-    } 
-    mediaName.innerHTML = newMedia.alt;
-    mediaPrice.innerHTML = newMedia.price + " $";
-    mediaLike.innerHTML = newMedia.likes + " <i class=\"fas fa-heart\"></i>";
-
-    mediaDesc.appendChild(mediaName);
-    mediaDesc.appendChild(mediaPrice);
-    mediaDesc.appendChild(mediaLike);
-    mediaCard.appendChild(mediaMedia);
-    mediaCard.appendChild(mediaDesc);
-
-    return mediaCard;
-}
-
 // Generate the gallery
 function generateGallery(mediaList, orderList){
     while (gallery.firstChild) {
@@ -289,11 +248,111 @@ function generateGallery(mediaList, orderList){
     }
 }
 
+// Call the factory constructors to build a mediaCard
+function generateMediaCard(media){
+    let cardObj = new mediaCardPartsFactory("card", media);
+    let descObj = new mediaCardPartsFactory("desc", media);
+    
+    if(media.image == undefined){
+        var mediaObj = new mediaCardPartsFactory("video", media);
+    }
+    else{
+        var mediaObj  = new mediaCardPartsFactory("image", media);
+    }
+    cardObj.mediaCard.appendChild(mediaObj.mediaMedia);
+    cardObj.mediaCard.appendChild(descObj.mediaDesc);
+
+    return cardObj.mediaCard;
+}
+
+// Intermediary between the actual factories classes and the user
+class mediaCardPartsFactory{
+    constructor(type, mediaData){
+        if(type === "card"){
+            return new MediaFactory_card();
+        }
+
+        if(type === "desc"){
+            return new MediaFactory_desc(mediaData);
+        }
+
+        if(type === "video"){
+            return new MediaFactory_video(mediaData);
+        }
+
+        if(type === "image"){
+            return new MediaFactory_image(mediaData);
+        }
+    }
+}
+
+// Various factories used to build a mediaCard
+class MediaFactory_card{
+    constructor(){
+        this.mediaCard = document.createElement("div");
+        this.mediaCard.classList.add("mediaCard"); 
+    }
+}
+
+class MediaFactory_video{
+    constructor(mediaData){
+        this.mediaMedia = document.createElement("div");
+        this.mediaMedia.classList.add("mediaCard__image"); 
+        this.mediaMedia.classList.add("modalMedia_open");
+        this.mediaMedia.innerHTML = "<a href=\"#\" > <video alt=\"" + mediaData.alt + "\"> <source src=\"public/img/media/" + mediaData.video + "\" type=\"video/mp4\">" + mediaData.alt + ", closeup view </video> </a>";
+    }
+}
+
+class MediaFactory_image{
+    constructor(mediaData){
+        this.mediaMedia = document.createElement("div");
+        this.mediaMedia.classList.add("mediaCard__image"); 
+        this.mediaMedia.classList.add("modalMedia_open");
+        this.mediaMedia.innerHTML = "<a href=\"#\" > <img src=\"public/img/media/" + mediaData.image + "\" alt=\""+ mediaData.alt + ", closeup view\">  </a>";
+    }
+}
+
+class MediaFactory_desc{
+    constructor(mediaData){
+        this.mediaDesc = document.createElement("div");
+        this.mediaName = document.createElement("p");
+        this.mediaPrice = document.createElement("p");
+        this.mediaLike = document.createElement("p");
+
+        this.mediaDesc.classList.add("mediaCard__desc"); 
+        this.mediaName.classList.add("mediaCard__desc__name"); 
+        this.mediaName.setAttribute("tabindex", "0");
+        this.mediaPrice.classList.add("mediaCard__desc__number"); 
+        this.mediaPrice.setAttribute("tabindex", "0");
+        this.mediaLike.classList.add("mediaCard__desc__number"); 
+        this.mediaLike.setAttribute("tabindex", "0");
+        this.mediaLike.classList.add("add_like_button"); 
+
+        this.mediaName.innerHTML = mediaData.alt;
+        this.mediaPrice.innerHTML = mediaData.price + " $";
+        this.mediaLike.innerHTML = mediaData.likes + " <em class=\"invisible\"> likes</em> <i class=\"fas fa-heart\" aria-label=\"likes\"></i>";
+    
+        this.mediaDesc.appendChild(this.mediaName);
+        this.mediaDesc.appendChild(this.mediaPrice);
+        this.mediaDesc.appendChild(this.mediaLike);
+    }
+}
+
+
+/////////// Exemple HTML code for a media card
 /*
 <div class="mediaCard">
     <div class="mediaCard__image">  
         <img id="modalMedia_open" src="public/img/photographersIDphotos/MimiKeel.jpg" alt="">
+        
+        OR
+                
+        <video class="modalMedia_open" controls> 
+            <source src="public/img/media/Travel_Rock_Mountains.mp4" type="video/mp4"> 
+            video name
+        </video>
     </div>
+    
     <div class="mediaCard__desc"> 
         <p class="mediaCard__desc__name"> Rainbow </p>
         <p class="mediaCard__desc__number"> 70 $ </p>
@@ -302,23 +361,10 @@ function generateGallery(mediaList, orderList){
 </div>
 */
 
+/////////// Example of HTML code for modalForm header
 /*
-async function getData(){
-    let requestURL = 'https://hugolainen.github.io/FishEye/public/data/FishEyeData.json';
-    let request = new XMLHttpRequest();
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
-    request.onload = function() {
-        const data = request.response;
-        return data;
-    }
-}
-
-getData().then(()=>{
-    mydata = getData();
-    console.log(myData);
-});
+<h1 id="modalForm_title"> 
+    Contact me <br>
+    photographerName
+</h1>
 */
-
-

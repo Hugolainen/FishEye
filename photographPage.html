@@ -9,22 +9,23 @@
     </head>
 
     <body>
-        <header class="header">
-            <a href = 'index.html'>
-                <img class="header__logo" src="public/img/logo.png" alt="Fisheye Home page"> </img>
+      <div id="mainBody">
+        <header class="header" aria-label="banner">
+            <a href = 'index.html' tabindex=0>
+                <img class="header__logo " src="public/img/logo.png" alt="Fisheye Home page"> </img>
             </a>
         </header>
 
-        <main class="main">
+        <main class="main" aria-label="main">
             <section class="photographProfile">
                 <div class="photographProfile__desc">
-                    <h1 id="photographerName">  </h1>
-                    <p id="photographerDesc"> </p>
-                    <ul class="tagList" id="photographerTags">
+                    <h1 id="photographerName" tabindex=0>  </h1>
+                    <p id="photographerDesc" tabindex=0> </p>
+                    <ul class="tagList" id="photographerTags" tabindex=0 aria-label="Tags">
                     </ul>
                 </div>
 
-                <button class="photographProfile__button" id="modalForm_open"> 
+                <button class="photographProfile__button" id="modalForm_open" aria-label="Contact Me"> 
                     Contact me 
                 </button>
         
@@ -32,8 +33,13 @@
                 </div>
             </section>
 
+            <footer class="photographerNumbers">
+              <span id="photographerLikes" tabindex=0> </span>
+              <span id="photographerPrice" tabindex=0> </span>
+            </footer>
+
             <div class="selectMenu">
-              <label> Order by </label>
+              <label tabindex=0> Order by </label>
                 <select id="selectedOrder">
                   <option value="popularity">Popularity</option>
                   <option value="date">Date</option>
@@ -41,92 +47,86 @@
               </select> 
             </div>
 
-
-
-            <footer class="photographerNumbers">
-                <span id="photographerLikes"> </span>
-                <span id="photographerPrice"> </span>
-            </footer>
-
             <content class="gallery" id="mediaGallery"> 
             </content>
-
-            <div class="modalForm" id="modalForm">
-                  <div class="modalForm__body">
-                    <h1> Contact me <br>
-                        Mimi Keel
-                   </h1>
-                    <form
-                      name="reserve"
-                      action="photographPage.html"
-                      method="get"
-                      onsubmit="return validate();"
-                    >
-                      <div class="formData">
-                        <label for="first">First Name</label>
-                        <input
-                          class="text-control"
-                          type="text"
-                          id="first"
-                          name="first"/>
-                      </div>
-                      <span class="msg_error" id="first_errorMessage"></span>
-                      
-                      <div class="formData">
-                        <label for="last">Last Name</label>
-                        <input
-                          class="text-control"
-                          type="text"
-                          id="last"
-                          name="last" />
-                      </div>
-                      <span class="msg_error" id="last_errorMessage"></span>
-        
-                      <div class="formData">
-                        <label for="email">Email</label>
-                        <input
-                          class="text-control"
-                          type="email"
-                          id="email"
-                          name="email" />
-                      </div>
-                      <span class="msg_error" id="email_errorMessage"></span>
-        
-                      <div class="formData">
-                        <label for="message">Your message</label>
-                        <textarea
-                          class="text-control text-control--message"
-                          type="text"
-                          id="message"
-                          name="message" 
-                          rows="4" 
-                          cols="50"></textarea>
-                      </div>
-                      <span class="msg_error" id="message_errorMessage">  </span>
-
-                      <input
-                        type="submit"
-                        id="modalForm_submit"
-                        class="button"
-                        value="Send" />
-                        <span class="msg_submitSuccess" id="message-submitSucess"> 
-                          Message sent succesfully
-                        </span>
-                    </form>
-                  </div>
-                  <span class="close closeModal-btn" id="modalForm_close"> <i class="fas fa-times"></i> </span>
-            </div>
-
-            <div class="modalMedia" id="modalMedia">
-                <div class="modalMedia__body">
-                    <div id="imgShow"> </div>
-                    <p id="imgName">  </p>
-                    <span class="navButton navButton__left" id="navButton_left"> <i class="fas fa-chevron-left"></i> </span>
-                    <span class="navButton navButton__right" id="navButton_right"> <i class="fas fa-chevron-right"></i> </span>
-                </div>
-                <span class="modalMedia__close" id="modalMedia_close"> <i class="fas fa-times"></i> </span>
-          </div>
         </main>
+      </div>    
+
+      <div tabindex=0 class="modalForm" id="modalForm" aria-modal="true" aria-labelledby="modalForm_title">
+            <div class="modalForm__body">
+              <h1 id="modalForm_title" tabindex=0> </h1>
+              <form
+                tabindex=0
+                name="reserve"
+                action="photographPage.html"
+                method="get"
+                onsubmit="return validate();"
+              >
+                <div class="formData">
+                  <label for="first">First Name</label>
+                  <input
+                    class="text-control"
+                    type="text"
+                    id="first"
+                    name="first"/>
+                </div>
+                <span class="msg_error" id="first_errorMessage"></span>
+                
+                <div class="formData">
+                  <label for="last">Last Name</label>
+                  <input
+                    class="text-control"
+                    type="text"
+                    id="last"
+                    name="last" />
+                </div>
+                <span class="msg_error" id="last_errorMessage"></span>
+
+                <div class="formData">
+                  <label for="email">Email</label>
+                  <input
+                    class="text-control"
+                    type="email"
+                    id="email"
+                    name="email" />
+                </div>
+                <span class="msg_error" id="email_errorMessage"></span>
+
+                <div class="formData">
+                  <label for="message">Your message</label>
+                  <textarea
+                    class="text-control text-control--message"
+                    type="text"
+                    id="message"
+                    name="message" 
+                    rows="4" 
+                    cols="50"></textarea>
+                </div>
+                <span class="msg_error" id="message_errorMessage">  </span>
+
+                <input
+                  type="submit"
+                  id="modalForm_submit"
+                  class="button"
+                  value="Send" 
+                  aria-label="Send" />
+                  <span class="msg_submitSuccess" id="message-submitSucess"> 
+                    Message sent succesfully
+                  </span>
+              </form>
+            </div>
+            <span class="close closeModal-btn" id="modalForm_close">  <a href="#" aria-label="Close Contact form"> <i class="fas fa-times"></i> </a> </span>
+      </div>
+
+      <div tabindex=0 class="modalMedia" id="modalMedia" aria-label="image closup view" aria-modal="true">
+          <div class="modalMedia__body">
+              <div id="imgShow"> </div>
+              <p  tabindex=0 id="imgName">  </p>
+              <span class="navButton navButton__left" id="navButton_left"> <a href="#" aria-label="Previous image"> <i class="fas fa-chevron-left"></i> </a> </span>
+              <span class="navButton navButton__right" id="navButton_right"> <a href="#" aria-label="Next image"> <i class="fas fa-chevron-right"></i></a> </span>
+          </div>
+          <span class="modalMedia__close" id="modalMedia_close"> <a href="#" aria-label="Close dialog"> <i class="fas fa-times"></i></a> </span>
+      </div>
 
         <script type="text/javascript" src="public/scripts/managePhotographContent.js"></script>
         <script type="text/javascript" src="public/scripts/modalForm.js"></script>

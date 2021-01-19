@@ -3,6 +3,7 @@ const modalForm = document.getElementById('modalForm');
 const modalForm_Open = document.getElementById('modalForm_open');
 const modalForm_Close = document.getElementById('modalForm_close');
 const modalForm_Submit = document.getElementById('modalForm_submit');
+const modalForm_title = document.getElementById('modalForm_title');
 
 const formFirst = document.getElementById('first');
 const formLast = document.getElementById('last');
@@ -15,7 +16,6 @@ const email_errMessage = document.getElementById('email_errorMessage');
 const message_errMessage = document.getElementById('message_errorMessage');
 const submitSucess_message = document.getElementById('message-submitSucess');
 
-
 // Lunch modal event
 modalForm_Open.addEventListener('click', ($event) => {
   $event.preventDefault();
@@ -26,6 +26,7 @@ modalForm_Open.addEventListener('click', ($event) => {
 function launchModalForm() {
   modalForm.style.display = "block";
   modalForm_Open.style.display = "none";
+  modalForm.focus(); 
 }
 
 // close modal with "cross" or after successful submit
@@ -45,6 +46,8 @@ function closeModalForm() {
   email_errMessage.style.display = "none";  
   message_errMessage.style.display = "none"; 
   submitSucess_message.style.display = "none"; 
+
+  modalForm_Open.focus();
 }
 
 // Specific function is confirm the patern of an email address
@@ -112,7 +115,10 @@ function validateMessage(){
 // If OK, print a success message and open the success screen after 2s
 modalForm_Submit.addEventListener('click', ($event) => {
   $event.preventDefault();
+  submitForm();
+});
 
+function submitForm(){
   if(validateFirst()
   && validateLast()
   && validateEmail()
@@ -123,7 +129,7 @@ modalForm_Submit.addEventListener('click', ($event) => {
     setTimeout(closeModalForm, 2000);
     setTimeout(cleanForm, 2000);
   }
-});
+}
 
 // Empty the input text after a successful send
 function cleanForm(){
@@ -140,3 +146,13 @@ function publishForm()
   console.log(formEmail.value);
   console.log(formMessage.value);
 }
+
+// Add keyboard events to close and submit the form
+modalForm.addEventListener('keyup', function (event) {
+  if (event.key === 'Escape') {
+    closeModalForm();
+  }
+  if (event.key === 'Enter') {
+    submitForm();
+  }
+});
