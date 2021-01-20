@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <title> FishEye - Mimi Keel </title>
         <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" href="css/style.css" type="text/css">
+        <link rel="stylesheet" href="css/prefixed/style.css" type="text/css">
         <script src="https://kit.fontawesome.com/6fcdcaea13.js" crossorigin="anonymous"></script>
     </head>
 
@@ -12,7 +12,7 @@
       <div id="mainBody">
         <header class="header" aria-label="banner">
             <a href = 'index.html' tabindex=0>
-                <img class="header__logo " src="public/img/logo.png" alt="Fisheye Home page"> </img>
+                <img class="header__logo " src="public/img/logo.png" alt="Fisheye Home page">
             </a>
         </header>
 
@@ -39,7 +39,7 @@
             </footer>
 
             <div class="selectMenu">
-              <label tabindex=0> Order by </label>
+              <label for="selectedOrder" tabindex=0> Order by </label>
                 <select id="selectedOrder">
                   <option value="popularity">Popularity</option>
                   <option value="date">Date</option>
@@ -47,12 +47,12 @@
               </select> 
             </div>
 
-            <content class="gallery" id="mediaGallery"> 
-            </content>
+            <section class="gallery" id="mediaGallery"> 
+            </section>
         </main>
       </div>    
 
-      <div tabindex=0 class="modalForm" id="modalForm" aria-modal="true" aria-labelledby="modalForm_title">
+      <div role="dialog" tabindex=0 class="modalForm" id="modalForm" aria-modal="true" aria-labelledby="modalForm_title">
             <div class="modalForm__body">
               <h1 id="modalForm_title" tabindex=0> </h1>
               <form
@@ -96,7 +96,6 @@
                   <label for="message">Your message</label>
                   <textarea
                     class="text-control text-control--message"
-                    type="text"
                     id="message"
                     name="message" 
                     rows="4" 
@@ -118,7 +117,7 @@
             <span class="close closeModal-btn" id="modalForm_close">  <a href="#" aria-label="Close Contact form"> <i class="fas fa-times"></i> </a> </span>
       </div>
 
-      <div tabindex=0 class="modalMedia" id="modalMedia" aria-label="image closup view" aria-modal="true">
+      <div role="dialog" tabindex=0 class="modalMedia" id="modalMedia" aria-label="image closup view" aria-modal="true">
           <div class="modalMedia__body">
               <div id="imgShow"> </div>
               <p  tabindex=0 id="imgName">  </p>
@@ -128,8 +127,8 @@
           <span class="modalMedia__close" id="modalMedia_close"> <a href="#" aria-label="Close dialog"> <i class="fas fa-times"></i></a> </span>
       </div>
 
-        <script type="text/javascript" src="public/scripts/managePhotographContent.js"></script>
-        <script type="text/javascript" src="public/scripts/modalForm.js"></script>
-        <script type="text/javascript" src="public/scripts/modalMedia.js"></script>
+        <script src="public/scripts/managePhotographContent.js"></script>
+        <script src="public/scripts/modalForm.js"></script>
+        <script src="public/scripts/modalMedia.js"></script>
     </body>
 </html>

@@ -23,12 +23,12 @@ request.onload = function() {
     for(let i=0; i<tagSelectList.length; i++)
     {
         tagSelectList[i].addEventListener('click', ($event) => {
-            tagSelectList[i].classList.add("--tagActive");
+            tagSelectList[i].classList.add("tagActive");
             for(var j=0; j<tagSelectList.length; j++)
             {
                 if(j != i)
                 {
-                    tagSelectList[j].classList.remove("--tagActive");
+                    tagSelectList[j].classList.remove("tagActive");
                 }
             }
             const tagSelected = (tagSelectList[i].textContent).slice(3).slice(0,-2).toLowerCase();
