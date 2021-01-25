@@ -17,14 +17,13 @@
         padding-top: 12px;
         padding-left: 100px;
 
-        @media (max-width: $breakpoint-minMobile) {
+        @media (max-width: $breakpoint-minTablet) {
             padding-left:0;
             margin: 0 40px;
         }
     }
 
-
-    @media (max-width: $breakpoint-minMobile) {
+    @media (max-width: $breakpoint-minTablet) {
         display: block;
         margin-top: 40px;
         margin-left: 20px;

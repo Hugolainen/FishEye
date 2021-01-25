@@ -24,6 +24,9 @@
         position: absolute;
         top: 35px;
         --leftPos: calc(50% + 300px);
+        @media (max-width: $breakpoint-minTablet) {
+            --leftPos: calc(52%);;
+        }
         @media (max-width: $breakpoint-minMobile) {
             --leftPos: calc(60%);;
             top: 50px;
@@ -32,6 +35,8 @@
     }
 
     &__content{
+
+        
         padding: 20px;
 
         display: flex;

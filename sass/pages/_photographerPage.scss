@@ -87,8 +87,7 @@
             color: $color-secondaryFilled-text;
         }
 
-        
-        @media (max-width: $breakpoint-minMobile) {
+        @media (max-width: $breakpoint-minTablet) {
             position: fixed;
             bottom: 30px;
             left: calc(50% - 85px);

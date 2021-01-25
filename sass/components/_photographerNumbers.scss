@@ -3,6 +3,19 @@
         display: none;
     }
 
+    @media (max-width: $breakpoint-minTablet) {
+        bottom: 94%;
+        left: calc(50% + 90px);
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+
+        width: 250px;
+        font-size: 20px;
+        padding: 20px 30px;
+    }
+
     background-color: $color-secondaryFilled-background;
     color: $color-secondaryFilled-text;
     font-size: 24px;
