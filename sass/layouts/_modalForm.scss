@@ -31,6 +31,11 @@
         left: 0;
     }
 
+    @media (max-width:$breakpoint-minTablet) {
+      left: calc(50% - 335px);
+      top: 60px;
+    }
+
     margin: 5% auto;
     width: 100%;
     max-width: 669px;
