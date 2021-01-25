@@ -32,7 +32,6 @@ request.onload = function() {
                 }
             }
             const tagSelected = (tagSelectList[i].textContent).slice(3).slice(0,-2).toLowerCase();
-            console.log(tagSelected);
             tagSelection(tagSelected);
         });
     }

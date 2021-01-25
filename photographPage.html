@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <title> FishEye - Mimi Keel </title>
         <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" href="css/prefixed/style.css" type="text/css">
+        <link rel="stylesheet" href="css/styleprefixed.css" type="text/css">
         <script src="https://kit.fontawesome.com/6fcdcaea13.js" crossorigin="anonymous"></script>
     </head>
 
@@ -70,7 +70,7 @@
                     id="first"
                     name="first"/>
                 </div>
-                <span class="msg_error" id="first_errorMessage"></span>
+                <span class="msg_error" id="first_errorMessage" role=alert></span>
                 
                 <div class="formData">
                   <label for="last">Last Name</label>
@@ -80,7 +80,7 @@
                     id="last"
                     name="last" />
                 </div>
-                <span class="msg_error" id="last_errorMessage"></span>
+                <span class="msg_error" id="last_errorMessage" role=alert></span>
 
                 <div class="formData">
                   <label for="email">Email</label>
@@ -90,7 +90,7 @@
                     id="email"
                     name="email" />
                 </div>
-                <span class="msg_error" id="email_errorMessage"></span>
+                <span class="msg_error" id="email_errorMessage" role=alert></span>
 
                 <div class="formData">
                   <label for="message">Your message</label>
@@ -101,7 +101,7 @@
                     rows="4" 
                     cols="50"></textarea>
                 </div>
-                <span class="msg_error" id="message_errorMessage">  </span>
+                <span class="msg_error" id="message_errorMessage" role=alert>  </span>
 
                 <input
                   type="submit"
@@ -109,7 +109,7 @@
                   class="button"
                   value="Send" 
                   aria-label="Send" />
-                  <span class="msg_submitSuccess" id="message-submitSucess"> 
+                  <span class="msg_submitSuccess" id="message-submitSucess" role=alert> 
                     Message sent succesfully
                   </span>
               </form>
